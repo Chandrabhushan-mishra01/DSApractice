@@ -408,6 +408,69 @@ using namespace std;
 //     delete(temp);
 // }
 
+// node* segregateEvenOdd(node* head) {
+//     if (!head || !head->next) return head;
+
+//     node* curr = head;
+//     while (curr->next != NULL) {
+//         curr = curr->next;
+//     }
+
+//     node* last = curr;
+//     node* temp = head;
+//     node* prev = NULL;
+
+//     while (temp != NULL) {
+//         if (temp->data % 2 != 0) {  // If it's an odd node
+//             if (prev) {
+//                 prev->next = temp->next;  // Remove the odd node
+//             } else {
+//                 head = temp->next;  // If the head is odd, update it
+//             }
+
+//             last->next = temp;  // Append odd node to the end
+//             last = temp;  // Update the last pointer
+//             temp = temp->next;  // Move to the next node
+//             last->next = NULL;  // Ensure the last node's next is NULL
+//         } else {
+//             prev = temp;  // Update the previous node to the current node
+//             temp = temp->next;  // Move to the next node
+//         }
+//     }
+
+//     return head;
+// }
+
+// node* segregateEvenOdd(node* head) {
+//     node *os = NULL, *oe = NULL, *es = NULL, *ee = NULL;
+//     for (node* curr = head; curr != NULL; curr = curr->next) {
+//         int x = curr->data;
+//         if (x % 2 == 0) {
+//             if (es == NULL) {
+//                 es = curr;
+//                 ee = curr;
+//             } else {
+//                 ee->next = curr;
+//                 ee = ee->next;
+//             }
+//         } else {
+//             if (os == NULL) {
+//                 os = curr;
+//                 oe = curr;
+//             } else {
+//                 oe->next = curr;
+//                 oe = oe->next;
+//             }
+//         }
+//     }
+//     if(os==NULL || es==NULL){
+//         return head;
+//     }
+//     ee->next=os;
+//     oe->next=NULL;
+//     return es;
+// }
+
 
 // int main() {
 //     node* head = new node(10);
