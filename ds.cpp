@@ -472,22 +472,24 @@ using namespace std;
 // }
 
 
-// int getIntersection(Node* head1, Node* head2) 
-// { 
-//     unordered_set<Node*> s;
-//     Node* curr=head1;
-//     while(curr!=NULL){
-//         s.insert(curr);
-//         curr=curr->next;
-//     }
-//     curr=head2;
-//     while(curr!=NULL){
-//         if(s.find(curr)!=s.end())
-//             return curr->data;
-//         curr=curr->next;
-//     }
-//     return -1;
-// } 
+node* getIntersection(Node* head1, Node* head2) { 
+        unordered_set<node*> s;
+        node* curr=head1;
+        while(curr!=NULL){
+            s.insert(curr);
+            curr=curr->next;
+        }
+        curr=head2;
+        while(curr!=NULL){
+            if(s.find(curr)!=s.end()){
+                return curr;
+                break;
+            }
+            curr=curr->next;
+        }
+        return NULL;
+
+} 
 
 
 // int getCount(node* head) {
