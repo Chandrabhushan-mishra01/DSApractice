@@ -472,24 +472,24 @@ using namespace std;
 // }
 
 
-node* getIntersection(Node* head1, Node* head2) { 
-        unordered_set<node*> s;
-        node* curr=head1;
-        while(curr!=NULL){
-            s.insert(curr);
-            curr=curr->next;
-        }
-        curr=head2;
-        while(curr!=NULL){
-            if(s.find(curr)!=s.end()){
-                return curr;
-                break;
-            }
-            curr=curr->next;
-        }
-        return NULL;
+// node* getIntersection(Node* head1, Node* head2) { 
+//         unordered_set<node*> s;
+//         node* curr=head1;
+//         while(curr!=NULL){
+//             s.insert(curr);
+//             curr=curr->next;
+//         }
+//         curr=head2;
+//         while(curr!=NULL){
+//             if(s.find(curr)!=s.end()){
+//                 return curr;
+//                 break;
+//             }
+//             curr=curr->next;
+//         }
+//         return NULL;
 
-} 
+// } 
 
 
 // int getCount(node* head) {
@@ -530,7 +530,33 @@ node* getIntersection(Node* head1, Node* head2) {
 //     }
 // }
 
+node* pairWiseSwap(node* head) {
+    node* curr=head;
+    while(curr!=NULL && curr->next!= NULL){
+        swap(curr->data,curr->next->data);  //but this solution did not swap node 
+        curr= curr->next->next;             //swap only data of node
+    }
+    return head ;
+}
 
+node* pairWiseSwap(node* head) {
+    if(head==NULL && head->next==NULL){
+        return head;
+    }
+    node* curr= head->next->next;
+    node* prev= head;
+    head=head->next;
+    head->next=prev;
+    while(curr!=NULL && curr->next!=NULL){
+        prev->next=curr->next;
+        prev=curr;
+        node* next=curr->next->next;
+        curr->next->next=curr;
+        curr=next;
+    }
+    prev->next=curr;
+    return head;
+}
 
 // int main() {
 //     node* head = new node(10);
