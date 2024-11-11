@@ -471,45 +471,63 @@ using namespace std;
 //     return es;
 // }
 
-int getCount(node* head) {
-    int count = 0;
-    node* curr = head;
-    while (curr != NULL) {
-        count++;
-        curr = curr->next;
-    }
-    return count;
-}
 
-node* getintersectionPoint(int d, node* head1, node* head2) {
-    node* curr1 = head1;
-    node* curr2 = head2;
-    for (int i = 0; i < d; i++) {
-        if (curr1 == NULL) {
-            return NULL;
-        }
-        curr1 = curr1->next;
-    }
-    while (curr1 != NULL && curr2 != NULL) {
-        if (curr1 == curr2) {
-            return curr1;
-        }
-        curr1 = curr1->next;
-        curr2 = curr2->next;
-    }
-    return NULL;
-}
+// int getIntersection(Node* head1, Node* head2) 
+// { 
+//     unordered_set<Node*> s;
+//     Node* curr=head1;
+//     while(curr!=NULL){
+//         s.insert(curr);
+//         curr=curr->next;
+//     }
+//     curr=head2;
+//     while(curr!=NULL){
+//         if(s.find(curr)!=s.end())
+//             return curr->data;
+//         curr=curr->next;
+//     }
+//     return -1;
+// } 
 
-node* getIntersection(node* head1, node* head2) {
-    int c1 = getCount(head1);
-    int c2 = getCount(head2);
-    int d = abs(c1 - c2);
-    if (c1 > c2) {
-        return getintersectionPoint(d, head1, head2);
-    } else {
-        return getintersectionPoint(d, head2, head1);
-    }
-}
+
+// int getCount(node* head) {
+//     int count = 0;
+//     node* curr = head;
+//     while (curr != NULL) {
+//         count++;
+//         curr = curr->next;
+//     }
+//     return count;
+// }
+// node* getintersectionPoint(int d, node* head1, node* head2) {
+//     node* curr1 = head1;
+//     node* curr2 = head2;
+//     for (int i = 0; i < d; i++) {
+//         if (curr1 == NULL) {
+//             return NULL;
+//         }
+//         curr1 = curr1->next;
+//     }
+//     while (curr1 != NULL && curr2 != NULL) {
+//         if (curr1 == curr2) {
+//             return curr1;
+//         }
+//         curr1 = curr1->next;
+//         curr2 = curr2->next;
+//     }
+//     return NULL;
+// }
+// node* getIntersection(node* head1, node* head2) {
+//     int c1 = getCount(head1);
+//     int c2 = getCount(head2);
+//     int d = abs(c1 - c2);
+//     if (c1 > c2) {
+//         return getintersectionPoint(d, head1, head2);
+//     } else {
+//         return getintersectionPoint(d, head2, head1);
+//     }
+// }
+
 
 
 // int main() {
