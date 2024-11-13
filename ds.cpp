@@ -488,7 +488,6 @@ using namespace std;
 //             curr=curr->next;
 //         }
 //         return NULL;
-
 // } 
 
 
@@ -557,8 +556,41 @@ using namespace std;
 //     prev->next=curr;
 //     return head;
 // }
+ 
+//  clone method01-->
+node* clone(node* head1){
+    unordered_map<node*,node*>m;
+    for(node* curr=head1;curr!=NULL;curr=curr->next){
+        m[curr]=new node(curr->data);
+    }
+    for(node* curr=head1;curr!=NULL;curr=curr->next){
+        m[curr].next=m[curr->next];
+        m[curr].random=m[curr->random];
+    }
+    return m[h1];
+}
 
-
+//clone method02-->
+node* clone(node* head){
+    node* curr= head;
+    while(curr!=NULL){
+        node* next=curr->next;
+        curr->next=new node(curr->data);
+        curr->next->next=next;
+        curr=next;
+    }
+    for(node* curr=head;curr!=NULL;curr=curr->next->next){
+        curr->next->random=(curr->random==NULL)? NULL: curr->random->next;
+    }
+    node* clone_head=head->next;
+    node* clonee=clone_head;
+    for(node* curr=head;curr!=NULL;curr=curr->next){
+        curr->next= curr->next->next;
+        clone->next= clone->next ? clone->next->next : NULL;
+        clone=clone->next;
+    }
+    return clone_head;
+}
 
 // int main() {
 //     node* head = new node(10);
