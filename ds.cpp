@@ -1110,38 +1110,41 @@ using namespace std;
 //     return head;
 // }
 
-node* reverseList(node* head) {
-    node* prev = NULL;
-    node* curr = head;
-    node* next = NULL;
-    while (curr != NULL) {
-        next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
-    }
-    return prev;
-}
-bool isPalindrome(node* head) {
-    if (head == NULL) return true;
-    node* slow = head;
-    node* fast = head;
-    while (fast->next != NULL && fast->next->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-    node* rev = reverseList(slow->next);
-    node* curr = head;
-    node* tempRev = rev; 
-    while (rev != NULL) {
-        if (rev->data != curr->data) {
-            reverseList(tempRev);  
-            return false;
-        }
-        rev = rev->next;
-        curr = curr->next;
-    }
-    reverseList(tempRev);
-    return true;
-}
+// node* reverseList(node* head) {
+//     node* prev = NULL;
+//     node* curr = head;
+//     node* next = NULL;
+//     while (curr != NULL) {
+//         next = curr->next;
+//         curr->next = prev;
+//         prev = curr;
+//         curr = next;
+//     }
+//     return prev;
+// }
+// bool isPalindrome(node* head) {
+//     if (head == NULL) return true;
+//     node* slow = head;
+//     node* fast = head;
+//     while (fast->next != NULL && fast->next->next != NULL) {
+//         slow = slow->next;
+//         fast = fast->next->next;
+//     }
 
+//     node* rev = reverseList(slow->next);
+//     node* curr = head;
+//     node* tempRev = rev; 
+//     while (rev != NULL) {
+//         if (rev->data != curr->data) {
+//             reverseList(tempRev);  
+//             return false;
+//         }
+//         rev = rev->next;
+//         curr = curr->next;
+//     }
+//     reverseList(tempRev);
+//     return true;
+// }
+
+
+// ----------------------------------------------------stack----------------------------------------------------------
