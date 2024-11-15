@@ -1158,6 +1158,9 @@ using namespace std;
 // overflow : when push() called on a full stack -->not common
 
 // array implementation of stack 
+//problem-
+// 1.doesn't handle overflow and underflow
+// 2.need to provide cap intially no dynamic resizing
 struct MyStack{
     int *arr;
     int cap;
