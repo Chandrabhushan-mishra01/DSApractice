@@ -1161,61 +1161,114 @@ using namespace std;
 //problem-
 // 1.doesn't handle overflow and underflow
 // 2.need to provide cap intially no dynamic resizing
-struct MyStack{
-    int *arr;
-    int cap;
-    int top;
-    MyStack(int c){
-        cap=c;
-        arr=new int[cap];
-        top=-1;
-    }
-    void push(int x){
-        if(top==cap-1){
-            cout<<"stack bhr gya😊"
-        }
-        top++;
-        arr[top]=x; 
-    }
-    int pop(){
-        if(top==-1){
-            cout<<"stack khali hai😊"
-        }
-        int res=arr[top];
-        top--;
-        return res;
-    }
-    int peek(){
-        if(top==-1){
-            cout<<"stack khali hai😊"
-        }
-        return arr[top];
-    }
-    int size(){
-        return (top+1);
-    }
-    int isEmpty(){
-        return (top==-1);
-    }
-}
+// struct MyStack{
+//     int *arr;
+//     int cap;
+//     int top;
+//     MyStack(int c){
+//         cap=c;
+//         arr=new int[cap];
+//         top=-1;
+//     }
+//     void push(int x){
+//         if(top==cap-1){
+//             cout<<"stack bhr gya😊"<<endl;
+//         }
+//         top++;
+//         arr[top]=x; 
+//     }
+//     int pop(){
+//         if(top==-1){
+//             cout<<"stack khali hai😊"<<endl;
+//         }
+//         int res=arr[top];
+//         top--;
+//         return res;
+//     }
+//     int peek(){
+//         if(top==-1){
+//             cout<<"stack khali hai😊"<<endl;
+//         }
+//         return arr[top];
+//     }
+//     int size(){
+//         return (top+1);
+//     }
+//     bool isEmpty(){
+//         return (top==-1);
+//     }
+// }
 
-struct MyStack{
-    vector<int> v;
+// struct MyStack{
+//     vector<int> v;
+//     void push(int x){
+//         v.push_back(x);
+//     }
+//     int pop(){
+//         int res=v.back();
+//         v.pop_back();
+//         return res;
+//     }
+//     int peek(){
+//         return v.back();
+//     }
+//     int size(){
+//         return v.size();
+//     }
+//     bool isEmpty(){
+//         return v.empty();
+//     }
+// }
+
+
+// linked list implementation of stack 
+
+struct node
+{
+    int data;
+    int *next;
+    int node(int d){
+        data=d;
+        next=NULL;
+    }
+};
+
+struct MyStack
+{
+    node* head;
+    int sz;
+    MyStack(){
+        head=NULL;
+        sz=0;
+    }
     void push(int x){
-        v.push_back(x);
+        node* temp = new node(x);
+        temp->next=head;
+        head=temp;
+        sz++;
     }
     int pop(){
-        int res=v.back();
-        v.pop_back();
+        if(head==NULL){
+            cout<<"stack khali hai bhai"<<endl;
+        }
+        int res=head->data;
+        node* temp=head;
+        head=head->next;
+        delete(temp);
+        sz--;
         return res;
     }
-    int peek(){
-        return v.back();
-    }
     int size(){
-        return v.size();
+        return sz;
     }
-    int isEmpty(){
-        return v.empty();
+    bool isEmpty(){
+        return head==NULL;
     }
-}
+    int peek(){
+        if(head==NULL){
+            cout<<"khali hai bhai"<<endl;
+        }
+        return head->data;
+    }
+};
+
