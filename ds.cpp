@@ -1288,16 +1288,36 @@ using namespace std;
 //                  |__empty()
 //                  |__push_back()
 //                  |__pop_back()
-stack < int > s;
-// eg:
-int main(){
-    stack<int>s;
-    s.push(10);
-    s.push(20);
-    s.push(30);
-    while(s.empty==false){
-        cout<<s.top()<<" ";
-        s.pop();
+// stack < int > s;
+// // eg:
+// int main(){
+//     stack<int>s;
+//     s.push(10);
+//     s.push(20);
+//     s.push(30);
+//     while(s.empty==false){
+//         cout<<s.top()<<" ";
+//         s.pop();
+//     }
+//     return 0;   
+// }
+
+// Question
+
+bool matching(char s , char t){
+    return ((s=='(' && t==')') || (s=='[' && t==']') || (s=='{' && t=='}')); 
+}
+bool isParenthesisBalanced(string& s) {
+    stack<char>st;
+    for(char x:s){
+        if(x=='(' || x=='[' || x=='{') st.push(x);
+        else{
+            if(st.empty()) return false;
+            if(matching(st.top(),x)) st.pop();
+            else return false;
+            
+        }
+
     }
-    return 0;   
+    return st.empty();
 }
