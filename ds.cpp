@@ -1148,3 +1148,41 @@ using namespace std;
 
 
 // ----------------------------------------------------stack----------------------------------------------------------
+// 5 main operation on stack is 
+// 1.isEmpty()-->return boolean value
+// 2.push(x)-->push x in stack 
+// 3.pop()--->pop top of the element from stack 
+// 4.peek()---> return top element
+// 5.size()-->return size of stack
+// underflow : when pop() or peek() called on empty stack
+// overflow : when push() called on a full stack -->not common
+
+// array implementation of stack 
+struct MyStack{
+    int *arr;
+    int cap;
+    int top;
+    MyStack(int c){
+        cap=c;
+        arr=new int[cap];
+        top=-1;
+    }
+    void push(int x){
+        top++;
+        arr[top]=x; 
+    }
+    int pop(){
+        int res=arr[top];
+        top--;
+        return res;
+    }
+    int peek(){
+        return arr[top];
+    }
+    int size(){
+        return (top+1);
+    }
+    int isEmpty(){
+        return (top==-1);
+    }
+}
