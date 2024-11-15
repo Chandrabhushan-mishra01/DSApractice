@@ -1932,8 +1932,8 @@
 //     return arr;
 // }
 
-int main() {
-    string s1 = "dcba";
+// int main() {
+//     string s1 = "dcba";
     
     // vector<int> result = longPropPreSuff(s1);
     
@@ -1941,10 +1941,10 @@ int main() {
     // for (int i : result) {
     //     cout << i << " ";
     // }
-    cout << lexicographicalRank(s1);
+//     cout << lexicographicalRank(s1);
 
-    return 0;
-}
+//     return 0;
+// }
 
 
 
@@ -1974,4 +1974,30 @@ int main() {
     // cout<<ans;
 //     return 0;
 // }
+
+
+// Question-Given an integer array arr, remove a subarray (can be empty) 
+// from arr such that the remaining elements in arr are non-decreasing.
+// Return the length of the shortest subarray to remove.
+// A subarray is a contiguous subsequence of the array.
+
+int findLengthOfShortestSubarray(vector<int>& arr) {
+    int n = arr.size();
+    int j = n-1;
+    while(j > 0 && arr[j] >= arr[j-1]) {
+        j--;
+    }
+    int i = 0;
+    int result = j; 
+    while(i < j && (i == 0 || arr[i] >= arr[i-1])) { 
+
+        while(j < n && arr[i] > arr[j]) {
+            j++;
+        }
+        result = min(result, j - i - 1);
+        i++;
+    }
+
+    return result;
+}
 
