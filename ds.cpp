@@ -1171,15 +1171,24 @@ struct MyStack{
         top=-1;
     }
     void push(int x){
+        if(top==cap-1){
+            cout<<"stack bhr gya😊"
+        }
         top++;
         arr[top]=x; 
     }
     int pop(){
+        if(top==-1){
+            cout<<"stack khali hai😊"
+        }
         int res=arr[top];
         top--;
         return res;
     }
     int peek(){
+        if(top==-1){
+            cout<<"stack khali hai😊"
+        }
         return arr[top];
     }
     int size(){
