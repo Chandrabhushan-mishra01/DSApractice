@@ -1148,7 +1148,7 @@ using namespace std;
 
 
 // ----------------------------------------------------stack----------------------------------------------------------
-// 5 main operation on stack is 
+// 5 main operation on stack is ---> timeComplexity of all 5 operation is O(1)
 // 1.isEmpty()-->return boolean value
 // 2.push(x)-->push x in stack 
 // 3.pop()--->pop top of the element from stack 
@@ -1157,13 +1157,13 @@ using namespace std;
 // underflow : when pop() or peek() called on empty stack
 // overflow : when push() called on a full stack -->not common
 //application-->
-//function call 
-//balanced parenthesis
-//reversing items
-//infix to postfix/prefix
-//evaluation of postfix/prefix
-//stack span problem
-//undo/redo or forward/backward
+//function call : 
+//balanced parenthesis :
+//reversing items :
+//infix to postfix/prefix :
+//evaluation of postfix/prefix :
+//stack span problem :
+//undo/redo or forward/backward : using two stack 
 
 // array implementation of stack 
 //problem-
@@ -1280,4 +1280,24 @@ using namespace std;
 //     }
 // };
 
-
+// stack in c++ stl
+//              |___container adapter - queue and priority queue is also container adapter 
+// Internal working : stack can be implemented on any underlying container that provides following operation
+//                  |__back()
+//                  |__size()
+//                  |__empty()
+//                  |__push_back()
+//                  |__pop_back()
+stack < int > s;
+// eg:
+int main(){
+    stack<int>s;
+    s.push(10);
+    s.push(20);
+    s.push(30);
+    while(s.empty==false){
+        cout<<s.top()<<" ";
+        s.pop();
+    }
+    return 0;   
+}
