@@ -1156,6 +1156,14 @@ using namespace std;
 // 5.size()-->return size of stack
 // underflow : when pop() or peek() called on empty stack
 // overflow : when push() called on a full stack -->not common
+//application-->
+//function call 
+//balanced parenthesis
+//reversing items
+//infix to postfix/prefix
+//evaluation of postfix/prefix
+//stack span problem
+//undo/redo or forward/backward
 
 // array implementation of stack 
 //problem-
@@ -1223,52 +1231,53 @@ using namespace std;
 
 // linked list implementation of stack 
 
-struct node
-{
-    int data;
-    int *next;
-    int node(int d){
-        data=d;
-        next=NULL;
-    }
-};
+// struct node
+// {
+//     int data;
+//     int *next;
+//     int node(int d){
+//         data=d;
+//         next=NULL;
+//     }
+// };
 
-struct MyStack
-{
-    node* head;
-    int sz;
-    MyStack(){
-        head=NULL;
-        sz=0;
-    }
-    void push(int x){
-        node* temp = new node(x);
-        temp->next=head;
-        head=temp;
-        sz++;
-    }
-    int pop(){
-        if(head==NULL){
-            cout<<"stack khali hai bhai"<<endl;
-        }
-        int res=head->data;
-        node* temp=head;
-        head=head->next;
-        delete(temp);
-        sz--;
-        return res;
-    }
-    int size(){
-        return sz;
-    }
-    bool isEmpty(){
-        return head==NULL;
-    }
-    int peek(){
-        if(head==NULL){
-            cout<<"khali hai bhai"<<endl;
-        }
-        return head->data;
-    }
-};
+// struct MyStack
+// {
+//     node* head;
+//     int sz;
+//     MyStack(){
+//         head=NULL;
+//         sz=0;
+//     }
+//     void push(int x){
+//         node* temp = new node(x);
+//         temp->next=head;
+//         head=temp;
+//         sz++;
+//     }
+//     int pop(){
+//         if(head==NULL){
+//             cout<<"stack khali hai bhai"<<endl;
+//         }
+//         int res=head->data;
+//         node* temp=head;
+//         head=head->next;
+//         delete(temp);
+//         sz--;
+//         return res;
+//     }
+//     int size(){
+//         return sz;
+//     }
+//     bool isEmpty(){
+//         return head==NULL;
+//     }
+//     int peek(){
+//         if(head==NULL){
+//             cout<<"khali hai bhai"<<endl;
+//         }
+//         return head->data;
+//     }
+// };
+
 
