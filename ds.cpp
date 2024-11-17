@@ -1304,20 +1304,84 @@ using namespace std;
 
 // Question
 
-bool matching(char s , char t){
-    return ((s=='(' && t==')') || (s=='[' && t==']') || (s=='{' && t=='}')); 
-}
-bool isParenthesisBalanced(string& s) {
-    stack<char>st;
-    for(char x:s){
-        if(x=='(' || x=='[' || x=='{') st.push(x);
-        else{
-            if(st.empty()) return false;
-            if(matching(st.top(),x)) st.pop();
-            else return false;
+// bool matching(char s , char t){
+//     return ((s=='(' && t==')') || (s=='[' && t==']') || (s=='{' && t=='}')); 
+// }
+// bool isParenthesisBalanced(string& s) {
+//     stack<char>st;
+//     for(char x:s){
+//         if(x=='(' || x=='[' || x=='{') st.push(x);
+//         else{
+//             if(st.empty()) return false;
+//             if(matching(st.top(),x)) st.pop();
+//             else return false;
             
-        }
+//         }
 
+//     }
+//     return st.empty();
+// }
+
+class twoStacks {
+public:
+    int *arr;
+    int cap, top1, top2;
+
+    // Default constructor with a default capacity of 100
+    twoStacks() {
+        cap = 100; // Default capacity
+        top1 = -1;
+        top2 = cap;
+        arr = new int[cap];
     }
-    return st.empty();
-}
+
+    // Constructor with a specific capacity
+    twoStacks(int n) {
+        cap = n;
+        top1 = -1;
+        top2 = n;
+        arr = new int[n];
+    }
+
+    // Function to push an integer into stack1
+    void push1(int x) {
+        if (top1 < top2 - 1) {
+            top1++;
+            arr[top1] = x;
+        } else {
+            cout<< -1<<endl;
+        }
+    }
+
+    // Function to push an integer into stack2
+    void push2(int x) {
+        if (top1 < top2 - 1) {
+            top2--;
+            arr[top2] = x;
+        } else {
+            cout<<-1<<endl;
+        }
+    }
+
+    // Function to remove an element from top of stack1
+    int pop1() {
+        if (top1 >= 0) {
+            int x = arr[top1];
+            top1--;
+            return x;
+        } else {
+            return -1;
+        }
+    }
+
+    // Function to remove an element from top of stack2
+    int pop2() {
+        if (top2 < cap) {
+            int x = arr[top2];
+            top2++;
+            return x;
+        } else {
+            return -1;
+        }
+    }
+};
