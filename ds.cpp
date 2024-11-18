@@ -1435,19 +1435,19 @@ using namespace std;
 //     }
 // };
 
-vector<int> calculateSpan(vector<int>& arr) {
-    vector<int> ans;
-    stack<int> s;
-    s.push(0);
-    ans.push_back(1);
-    int n = arr.size();
-    for (int i = 1; i < n; i++) {
-        while (!s.empty() && arr[s.top()] <= arr[i]) {
-            s.pop();
-        }
-        int span = s.empty() ? i + 1 : i - s.top();
-        ans.push_back(span);
-        s.push(i);
-    }
-    return ans;
-}
+// vector<int> calculateSpan(vector<int>& arr) {
+//     vector<int> ans;
+//     stack<int> s;
+//     s.push(0);
+//     ans.push_back(1);
+//     int n = arr.size();
+//     for (int i = 1; i < n; i++) {
+//         while (!s.empty() && arr[s.top()] <= arr[i]) {
+//             s.pop();
+//         }
+//         int span = s.empty() ? i + 1 : i - s.top();
+//         ans.push_back(span);
+//         s.push(i);
+//     }
+//     return ans;
+// }
