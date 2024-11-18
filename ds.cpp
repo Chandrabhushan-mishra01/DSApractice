@@ -1484,61 +1484,86 @@ using namespace std;
 
 // naive solution for Histogram Max Rectangular Area problem 
 
-long long getMaxArea(vector<long long> &hist) {
-    int res=0;
-    for(int i=0;i<hist.size();i++){
-        int curr=hist[i];
-        for(int j=i-1;j>=0;j--){
-            if(hist[j]>=hist[i]){
-                curr+=hist[i];
-            }else{
-                break;
-            }
-        }
-        for(int j=i+1;j<n;j++){
-            if(hist[j]>=hist[i]){
-                curr+=hist[i];
-            }else{
-                break;
-            }
-        }
-        res=max(res,curr)
-    }
-}
+// long long getMaxArea(vector<long long> &hist) {
+//     int res=0;
+//     for(int i=0;i<hist.size();i++){
+//         int curr=hist[i];
+//         for(int j=i-1;j>=0;j--){
+//             if(hist[j]>=hist[i]){
+//                 curr+=hist[i];
+//             }else{
+//                 break;
+//             }
+//         }
+//         for(int j=i+1;j<n;j++){
+//             if(hist[j]>=hist[i]){
+//                 curr+=hist[i];
+//             }else{
+//                 break;
+//             }
+//         }
+//         res=max(res,curr)
+//     }
+// }
 
-// Efficient solution 
+// // Efficient solution 
 
+// long long getMaxArea(vector<long long>& hist) {
+//     int n = hist.size();
+//     stack<int> sl;
+//     vector<int> left(n);
+    
+//     for (int i = 0; i < n; i++) {
+//         while (!sl.empty() && hist[sl.top()] >= hist[i]) {
+//             sl.pop();
+//         }
+//         left[i] = sl.empty() ? -1 : sl.top();
+//         sl.push(i);
+//     }
+    
+//     stack<int> sr;
+//     vector<int> right(n);
+    
+//     for (int i = n - 1; i >= 0; i--) {
+//         while (!sr.empty() && hist[sr.top()] >= hist[i]) {    //all concept of stack used in this question..😎
+//             sr.pop();
+//         }
+//         right[i] = sr.empty() ? n : sr.top();
+//         sr.push(i);
+//     }
+    
+//     long long ans = 0;
+//     for (int i = 0; i < n; i++) {
+//         long long width = right[i] - left[i] - 1;
+//         ans = max(ans, width * hist[i]);
+//     }
+    
+//     return ans;
+// }
+
+// more efficient solution use only one stack 
 long long getMaxArea(vector<long long>& hist) {
     int n = hist.size();
-    stack<int> sl;
-    vector<int> left(n);
     
+    stack<int> s;
+    long long res = 0, tp, curr;
     for (int i = 0; i < n; i++) {
-        while (!sl.empty() && hist[sl.top()] >= hist[i]) {
-            sl.pop();
+        while (!s.empty() && hist[s.top()] >= hist[i]) {
+            tp = s.top();
+            s.pop();
+            curr = hist[tp] * (s.empty() ? i : (i - s.top() - 1));
+            res = max(res, curr);
         }
-        left[i] = sl.empty() ? -1 : sl.top();
-        sl.push(i);
+        s.push(i);
     }
-    
-    stack<int> sr;
-    vector<int> right(n);
-    
-    for (int i = n - 1; i >= 0; i--) {
-        while (!sr.empty() && hist[sr.top()] >= hist[i]) {    //all concept of stack used in this question..😎
-            sr.pop();
-        }
-        right[i] = sr.empty() ? n : sr.top();
-        sr.push(i);
+
+    while (!s.empty()) {
+        tp = s.top();
+        s.pop();
+        curr = hist[tp] * (s.empty() ? n : (n - s.top() - 1));
+        res = max(res, curr);
     }
-    
-    long long ans = 0;
-    for (int i = 0; i < n; i++) {
-        long long width = right[i] - left[i] - 1;
-        ans = max(ans, width * hist[i]);
-    }
-    
-    return ans;
+    return res;
 }
 
 
