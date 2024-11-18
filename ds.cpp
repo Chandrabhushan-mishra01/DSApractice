@@ -1386,52 +1386,68 @@ using namespace std;
 //     }
 // };
 
-class kStacks{
-public:
-    int *arr, *top , *next;
-    int k,cap, freeTop;
-    // Constructor with a specific capacity
-    kStacks(int k1,int n) {
-        k=k1; 
-        cap = n;
-        freeTop=0;
-        arr = new int[cap];  //array
-        top = new int[k];    //top of size is equal to number of stack which represente index of top of the element 
-        next = new int[cap]; //point to next element after stack top //point to next free space
-        
-        for(int i=0;i<k;i++){
-            top[i]=-1;
-        }
-        for(int i=0;i<cap-1;i++){
-            next[i]=i+1;
-        }
-        next[cap-1]=-1;
-    }
-    bool isFull(){return freeTop==-1;}
-    bool isEmpty(int sn){return top[sn]==-1;}
+// class kStacks{
+// public:
+//     int *arr, *top , *next;
+//     int k,cap, freeTop;
+//     // Constructor with a specific capacity
+//     kStacks(int k1,int n) {
+//         k=k1; 
+//         cap = n;
+//         freeTop=0;
+//         arr = new int[cap];  //array
+//         top = new int[k];    //top of size is equal to number of stack which represente index of top of the element 
+//         next = new int[cap]; //point to next element after stack top //point to next free space        
+//         for(int i=0;i<k;i++){
+//             top[i]=-1;
+//         }
+//         for(int i=0;i<cap-1;i++){
+//             next[i]=i+1;
+//         }
+//         next[cap-1]=-1;
+//     }
+//     bool isFull(){return freeTop==-1;}
+//     bool isEmpty(int sn){return top[sn]==-1;}
 
-    // Function to push an integer into stack
-    void push1(int x,int sn) {
-        if (isFull()) {
-            cout<< " stack overflow "<<endl;
-            return ;
+//     // Function to push an integer into stack
+//     void push1(int x,int sn) {
+//         if (isFull()) {
+//             cout<< " stack overflow "<<endl;
+//             return ;
+//         }
+//         int i=freeTop;    // find index ->jisme value insert karengye
+//         freeTop=next[i];  // update freetop -->next value kha insert karengye
+//         arr[i]=x;         // value inserted
+//         next[i]=top[sn];  // after  value inserted next value show prev top
+//         top[sn-1]=i;      // show index of top of the element of that stack 
+//     }
+//     // Function to pop an integer into stack
+//     int pop1(int sn) {
+//         if (isEmpty(sn)) {
+//             cout<< " stack underflow "<<endl;
+//             return INT_MAX;
+//         }
+//         int i = top[sn-1]; //reverse of push
+//         top[sn-1]=next[i];
+//         next[i]=freeTop;
+//         freeTop=i;
+//         return arr[i];
+//     }
+// };
+
+vector<int> calculateSpan(vector<int>& arr) {
+    vector<int> ans;
+    stack<int> s;
+    s.push(0);
+    ans.push_back(1);
+    int n = arr.size();
+    for (int i = 1; i < n; i++) {
+        while (!s.empty() && arr[s.top()] <= arr[i]) {
+            s.pop();
         }
-        int i=freeTop;    // find index ->jisme value insert karengye
-        freeTop=next[i];  // update freetop -->next value kha insert karengye
-        arr[i]=x;         // value inserted
-        next[i]=top[sn];  // after  value inserted next value show prev top
-        top[sn-1]=i;      // show index of top of the element of that stack 
+        int span = s.empty() ? i + 1 : i - s.top();
+        ans.push_back(span);
+        s.push(i);
     }
-    // Function to pop an integer into stack
-    int pop1(int sn) {
-        if (isEmpty(sn)) {
-            cout<< " stack underflow "<<endl;
-            return INT_MAX;
-        }
-        int i = top[sn-1]; //reverse of push
-        top[sn-1]=next[i];
-        next[i]=freeTop;
-        freeTop=i;
-        return arr[i];
-    }
-};
+    return ans;
+}
