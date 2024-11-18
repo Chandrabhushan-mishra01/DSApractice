@@ -1322,66 +1322,116 @@ using namespace std;
 //     return st.empty();
 // }
 
-class twoStacks {
+// class twoStacks {
+// public:
+//     int *arr;
+//     int cap, top1, top2;
+
+//     // Default constructor with a default capacity of 100
+//     twoStacks() {
+//         cap = 100; // Default capacity
+//         top1 = -1;
+//         top2 = cap;
+//         arr = new int[cap];
+//     }
+
+//     // Constructor with a specific capacity
+//     twoStacks(int n) {
+//         cap = n;
+//         top1 = -1;
+//         top2 = n;
+//         arr = new int[n];
+//     }
+
+//     // Function to push an integer into stack1
+//     void push1(int x) {
+//         if (top1 < top2 - 1) {
+//             top1++;
+//             arr[top1] = x;
+//         } else {
+//             cout<< -1<<endl;
+//         }
+//     }
+
+//     // Function to push an integer into stack2
+//     void push2(int x) {
+//         if (top1 < top2 - 1) {
+//             top2--;
+//             arr[top2] = x;
+//         } else {
+//             cout<<-1<<endl;
+//         }
+//     }
+
+//     // Function to remove an element from top of stack1
+//     int pop1() {
+//         if (top1 >= 0) {
+//             int x = arr[top1];
+//             top1--;
+//             return x;
+//         } else {
+//             return -1;
+//         }
+//     }
+
+//     // Function to remove an element from top of stack2
+//     int pop2() {
+//         if (top2 < cap) {
+//             int x = arr[top2];
+//             top2++;
+//             return x;
+//         } else {
+//             return -1;
+//         }
+//     }
+// };
+
+class kStacks{
 public:
-    int *arr;
-    int cap, top1, top2;
-
-    // Default constructor with a default capacity of 100
-    twoStacks() {
-        cap = 100; // Default capacity
-        top1 = -1;
-        top2 = cap;
-        arr = new int[cap];
-    }
-
+    int *arr, *top , *next;
+    int k,cap, freeTop;
     // Constructor with a specific capacity
-    twoStacks(int n) {
+    kStacks(int k1,int n) {
+        k=k1; 
         cap = n;
-        top1 = -1;
-        top2 = n;
-        arr = new int[n];
-    }
-
-    // Function to push an integer into stack1
-    void push1(int x) {
-        if (top1 < top2 - 1) {
-            top1++;
-            arr[top1] = x;
-        } else {
-            cout<< -1<<endl;
+        freeTop=0;
+        arr = new int[cap];  //array
+        top = new int[k];    //top of size is equal to number of stack which represente index of top of the element 
+        next = new int[cap]; //point to next element after stack top //point to next free space
+        
+        for(int i=0;i<k;i++){
+            top[i]=-1;
         }
-    }
-
-    // Function to push an integer into stack2
-    void push2(int x) {
-        if (top1 < top2 - 1) {
-            top2--;
-            arr[top2] = x;
-        } else {
-            cout<<-1<<endl;
+        for(int i=0;i<cap-1;i++){
+            next[i]=i+1;
         }
+        next[cap-1]=-1;
     }
+    bool isFull(){return freeTop==-1;}
+    bool isEmpty(int sn){return top[sn]==-1;}
 
-    // Function to remove an element from top of stack1
-    int pop1() {
-        if (top1 >= 0) {
-            int x = arr[top1];
-            top1--;
-            return x;
-        } else {
-            return -1;
+    // Function to push an integer into stack
+    void push1(int x,int sn) {
+        if (isFull()) {
+            cout<< " stack overflow "<<endl;
+            return ;
         }
+        int i=freeTop;    // find index ->jisme value insert karengye
+        freeTop=next[i];  // update freetop -->next value kha insert karengye
+        arr[i]=x;         // value inserted
+        next[i]=top[sn];  // after  value inserted next value show prev top
+        top[sn-1]=i;      // show index of top of the element of that stack 
     }
-
-    // Function to remove an element from top of stack2
-    int pop2() {
-        if (top2 < cap) {
-            int x = arr[top2];
-            top2++;
-            return x;
-        } else {
-            return -1;
+    // Function to pop an integer into stack
+    int pop1(int sn) {
+        if (isEmpty(sn)) {
+            cout<< " stack underflow "<<endl;
+            return INT_MAX;
         }
+        int i = top[sn-1]; //reverse of push
+        top[sn-1]=next[i];
+        next[i]=freeTop;
+        freeTop=i;
+        return arr[i];
     }
 };
