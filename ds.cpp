@@ -1542,28 +1542,76 @@ using namespace std;
 // }
 
 // more efficient solution use only one stack 
-long long getMaxArea(vector<long long>& hist) {
-    int n = hist.size();
+// long long getMaxArea(vector<long long>& hist) {
+//     int n = hist.size();
     
-    stack<int> s;
-    long long res = 0, tp, curr;
-    for (int i = 0; i < n; i++) {
-        while (!s.empty() && hist[s.top()] >= hist[i]) {
+//     stack<int> s;
+//     long long res = 0, tp, curr;
+//     for (int i = 0; i < n; i++) {
+//         while (!s.empty() && hist[s.top()] >= hist[i]) {
+//             tp = s.top();
+//             s.pop();
+//             curr = hist[tp] * (s.empty() ? i : (i - s.top() - 1));  //difficult to digest 
+//             res = max(res, curr);
+//         }
+//         s.push(i);
+//     }
+
+//     while (!s.empty()) {
+//         tp = s.top();
+//         s.pop();
+//         curr = hist[tp] * (s.empty() ? n : (n - s.top() - 1));
+//         res = max(res, curr);
+//     }
+//     return res;
+// }
+
+
+// MAX rectangle problem -Given a binary matrix M of size n X m. Find the maximum area of a rectangle formed only of 1s in the given matrix.
+
+class Solution{
+  public:
+  
+    long long getMaxArea(vector<long long>& hist) {
+        int n = hist.size();
+        stack<int> s;
+        long long res = 0, tp, curr;
+    
+        for (int i = 0; i < n; i++) {
+            while (!s.empty() && hist[s.top()] >= hist[i]) {
+                tp = s.top();
+                s.pop();
+                curr = hist[tp] * (s.empty() ? i : (i - s.top() - 1));
+                res = max(res, curr);
+            }
+            s.push(i);
+        }
+        while (!s.empty()) {
             tp = s.top();
             s.pop();
-            curr = hist[tp] * (s.empty() ? i : (i - s.top() - 1));
+            curr = hist[tp] * (s.empty() ? n : (n - s.top() - 1));
             res = max(res, curr);
         }
-        s.push(i);
+        return res;
+    }
+    
+    int maxArea(int M[MAX][MAX], int n, int m) {
+        vector<long long> hist(m, 0); 
+        long long res = 0; 
+    
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                hist[j] = (M[i][j] == 0) ? 0 : hist[j] + 1; \
+            }
+            res = max(res, getMaxArea(hist)); 
+        }
+        return (int)res; 
+    
     }
 
-    while (!s.empty()) {
-        tp = s.top();
-        s.pop();
-        curr = hist[tp] * (s.empty() ? n : (n - s.top() - 1));
-        res = max(res, curr);
-    }
-    return res;
-}
+};
+
+
+
 
 
