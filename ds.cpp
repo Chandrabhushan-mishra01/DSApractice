@@ -1452,19 +1452,35 @@ using namespace std;
 //     return ans;
 // } 
 
-vector<int> previousGreater(vector<int>& arr) {
-    vector<int> ans;
-    stack<int> s;
-    s.push(0);
-    ans.push_back(-1);
+// vector<int> previousGreater(vector<int>& arr) {
+//     vector<int> ans;
+//     stack<int> s;
+//     s.push(arr[0]);
+//     int n = arr.size();
+//     for (int i = 0; i < n; i++) {
+//         while (!s.empty() && s.top() <= arr[i]) {
+//             s.pop();
+//         }
+//         int prev_g = s.empty() ? -1 : s.top();
+//         ans.push_back(prev_g);
+//         s.push(arr[i]);
+//     }
+//     return ans;
+// }
+
+vector<int> nextGreater(vector<int>& arr) {
     int n = arr.size();
-    for (int i = 1; i < n; i++) {
-        while (!s.empty() && arr[s.top()] <= arr[i]) {
+    stack<int> s;
+    vector<int> ans(n); 
+    for (int i = n - 1; i >= 0; i--) { 
+        while (!s.empty() && s.top() <= arr[i]) {
             s.pop();
         }
-        int prev_g = s.empty() ? -1 : arr[s.top()];
-        ans.push_back(prev_g);
-        s.push(i);
+        ans[i] = s.empty() ? -1 : s.top();
+        s.push(arr[i]);
     }
     return ans;
 }
+
+
+
