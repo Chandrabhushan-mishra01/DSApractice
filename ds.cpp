@@ -1436,12 +1436,10 @@ using namespace std;
 // };
 
 // vector<int> calculateSpan(vector<int>& arr) {
-//     vector<int> ans;
 //     stack<int> s;
-//     s.push(0);
-//     ans.push_back(1);
+//     vector<int> ans;
 //     int n = arr.size();
-//     for (int i = 1; i < n; i++) {
+//     for (int i = 0; i < n; i++) {
 //         while (!s.empty() && arr[s.top()] <= arr[i]) {
 //             s.pop();
 //         }
@@ -1453,24 +1451,22 @@ using namespace std;
 // } 
 
 // vector<int> previousGreater(vector<int>& arr) {
-//     vector<int> ans;
 //     stack<int> s;
-//     s.push(arr[0]);
 //     int n = arr.size();
+//     vector < int > ans(n);
 //     for (int i = 0; i < n; i++) {
 //         while (!s.empty() && s.top() <= arr[i]) {
 //             s.pop();
 //         }
-//         int prev_g = s.empty() ? -1 : s.top();
-//         ans.push_back(prev_g);
+//         ans[i] = s.empty() ? -1 : s.top();
 //         s.push(arr[i]);
 //     }
 //     return ans;
 // }
 
 // vector<int> nextGreater(vector<int>& arr) {
-//     int n = arr.size();
 //     stack<int> s;
+//     int n = arr.size();
 //     vector<int> ans(n); 
 //     for (int i = n - 1; i >= 0; i--) { 
 //         while (!s.empty() && s.top() <= arr[i]) {
@@ -1511,8 +1507,7 @@ using namespace std;
 // long long getMaxArea(vector<long long>& hist) {
 //     int n = hist.size();
 //     stack<int> sl;
-//     vector<int> left(n);
-    
+//     vector<int> left(n); 
 //     for (int i = 0; i < n; i++) {
 //         while (!sl.empty() && hist[sl.top()] >= hist[i]) {
 //             sl.pop();
@@ -1522,22 +1517,19 @@ using namespace std;
 //     }
     
 //     stack<int> sr;
-//     vector<int> right(n);
-    
+//     vector<int> right(n); 
 //     for (int i = n - 1; i >= 0; i--) {
 //         while (!sr.empty() && hist[sr.top()] >= hist[i]) {    //all concept of stack used in this question..😎
 //             sr.pop();
 //         }
 //         right[i] = sr.empty() ? n : sr.top();
 //         sr.push(i);
-//     }
-    
+//     }   
 //     long long ans = 0;
 //     for (int i = 0; i < n; i++) {
 //         long long width = right[i] - left[i] - 1;
 //         ans = max(ans, width * hist[i]);
-//     }
-    
+//     } 
 //     return ans;
 // }
 
