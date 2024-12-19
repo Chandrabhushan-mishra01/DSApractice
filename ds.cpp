@@ -1604,6 +1604,29 @@ using namespace std;
 // };
 
 
-
+class Solution {          
+    stack<int> s;         
+    stack<int> as;         
+public:
+    int getMin() {
+        if (as.empty()) return -1; 
+        return as.top();            
+    }
+    int pop() {
+        if (s.empty()) return -1;  
+        int topElement = s.top();   
+        s.pop();                    
+        if (topElement == as.top()) {
+            as.pop();               
+        }
+        return topElement;
+    }
+    void push(int x) {
+        s.push(x);                  
+        if (as.empty() || x <= as.top()) {
+            as.push(x);             
+        }
+    }
+};
 
 
