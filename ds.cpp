@@ -1604,29 +1604,204 @@ using namespace std;
 // };
 
 
-class Solution {          
-    stack<int> s;         
-    stack<int> as;         
-public:
-    int getMin() {
-        if (as.empty()) return -1; 
-        return as.top();            
-    }
-    int pop() {
-        if (s.empty()) return -1;  
-        int topElement = s.top();   
-        s.pop();                    
-        if (topElement == as.top()) {
-            as.pop();               
-        }
-        return topElement;
-    }
-    void push(int x) {
-        s.push(x);                  
-        if (as.empty() || x <= as.top()) {
-            as.push(x);             
-        }
-    }
-};
+// class Solution {          
+//     stack<int> s;         
+//     stack<int> as;         
+// public:
+//     int getMin() {
+//         if (as.empty()) return -1; 
+//         return as.top();            
+//     }
+//     int pop() {
+//         if (s.empty()) return -1;  
+//         int topElement = s.top();   
+//         s.pop();                    
+//         if (topElement == as.top()) {
+//             as.pop();               
+//         }
+//         return topElement;
+//     }
+//     void push(int x) {
+//         s.push(x);                  
+//         if (as.empty() || x <= as.top()) {
+//             as.push(x);             
+//         }
+//     }
+// };
 
+
+
+// int prec(char c) {
+//     if (c == '^')
+//         return 3;
+//     else if (c == '/' || c == '*')
+//         return 2;
+//     else if (c == '+' || c == '-')
+//         return 1;
+//     else
+//         return -1;
+// }
+
+// bool isLeftAssociative(char c) {
+//     return c != '^';
+// }
+
+// void infixToPostfix(string s) {
+//     stack<char> st;
+//     string result;
+//     for (int i = 0; i < s.length(); i++) {
+//         char c = s[i];
+//         if((c>='a' && c<='z') || (c>='A' && c<='Z') || (c>='0' && c<='9'))
+//             result += c;
+
+//         else if(c == '(')
+//             st.push('(');
+
+//         else if(c == ')') {
+//             while(st.top() != '(') {
+//                 result += st.top();
+//                 st.pop();
+//             }
+//             st.pop();
+//         }
+
+//         else{
+//             while(!st.empty() && (prec(c)< prec(st.top()) || (prec(c) == prec(st.top()) && isLeftAssociative(c)))) {
+//                 result += st.top();
+//                 st.pop();
+//             }
+//             st.push(c);
+//         }
+//     }
+
+//     while (!st.empty()) {
+//         result += st.top();
+//         st.pop();
+//     }
+
+//     cout << result << endl;
+// }
+
+
+
+
+// int evaluationOfPostfix(string s) {
+//     stack<int> st;
+
+//     for (int i = 0; i < s.length(); i++) {
+//         if (isdigit(s[i])) {
+//             st.push(s[i] - '0');    //why sub - "0" - reason : char'0'has ASCII value 48 and to char digit into int subs - '0'
+//         } else {                    // ex: To Convert char '3'--> int 3 : char 3 has ascii 51 and subs char 0 whose ascii value 48 obtain int 3 
+//             int opr1 = st.top();
+//             st.pop();
+//             int opr2 = st.top();
+//             st.pop();
+
+//             switch (s[i]) {
+//                 case '^':
+//                     st.push(pow(opr2, opr1));
+//                     break;
+//                 case '*':
+//                     st.push(opr2 * opr1);
+//                     break;
+//                 case '/':
+//                     st.push(opr2 / opr1);
+//                     break;
+//                 case '+':
+//                     st.push(opr2 + opr1);
+//                     break;
+//                 case '-':
+//                     st.push(opr2 - opr1);
+//                     break;
+//                 default:
+//                     return -1;
+//             }
+//         }
+//     } 
+//         return st.top();
+// }
+
+
+
+// Function to convert infix expression to prefix
+
+// int prec(char c) {
+//     if (c == '^')
+//         return 3;
+//     else if (c == '*' || c == '/')
+//         return 2;
+//     else if (c == '+' || c == '-')
+//         return 1;
+//     else
+//         return -1;
+// }
+// void infixToPrefix(string s) {
+//     stack<char> st;
+//     string result;
+//     for (int i = s.length() - 1; i >= 0; i--) {
+//         char c = s[i];
+//         if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+//             result += c;
+
+//         else if (c == ')')
+//             st.push(')');
+
+//         else if (c == '(') {
+//             while (st.top() != ')') {
+//                 result += st.top();
+//                 st.pop();
+//             }
+//             st.pop();
+//         }
+//         else {
+//             while (!st.empty() && prec(c) <= prec(st.top())) {
+//                 result += st.top();
+//                 st.pop();
+//             }
+//             st.push(c);
+//         }
+//     }
+//     while (!st.empty()) {
+//         result += st.top();
+//         st.pop();
+//     }
+//     reverse(result.begin(), result.end());
+//     cout << "Prefix Expression: " << result << endl;
+// }
+
+
+
+// int evaluationOfPrefix(string s) {
+//     stack<int> st;
+//     for (int i = s.length(); i >= 0; i--) {
+//         if (isdigit(s[i])) {
+//             st.push(s[i] - '0');    
+//         } else {                    
+//             int opr1 = st.top();
+//             st.pop();
+//             int opr2 = st.top();
+//             st.pop();
+//             switch (s[i]) {
+//                 case '^':
+//                     st.push(pow(opr2, opr1));
+//                     break;
+//                 case '*':
+//                     st.push(opr2 * opr1);
+//                     break;
+//                 case '/':
+//                     st.push(opr2 / opr1);
+//                     break;
+//                 case '+':
+//                     st.push(opr2 + opr1);
+//                     break;
+//                 case '-':
+//                     st.push(opr2 - opr1);
+//                     break;
+//                 default:
+//                     return -1;
+//             }
+//         }
+//     } 
+//         return st.top();
+// }
 
