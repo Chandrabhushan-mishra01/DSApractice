@@ -1682,6 +1682,54 @@ using namespace std;
 //     cout << result << endl;
 // }
 
+// Function to convert an infix expression to a postfix expression.
+//  int prec(char c) {
+//     if (c == '^')
+//         return 3;
+//     else if (c == '/' || c == '*')
+//         return 2;
+//     else if (c == '+' || c == '-')
+//         return 1;
+//     else
+//         return -1;
+// }
+
+// string infixToPostfix(string& s) {
+//     stack<char> st;
+//     string result;
+//     for (int i = 0; i < s.length(); i++) {
+//         char c = s[i];
+        
+//         if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+//             result += c;
+        
+//         else if(c == '(')
+//             st.push('(');
+        
+//         else if(c == ')') {
+//             while(!st.empty() && st.top() != '(') {
+//                 result += st.top();
+//                 st.pop();
+//             }
+//             st.pop();
+//         }
+        
+//         else {
+//             while(!st.empty() && prec(c) <= prec(st.top())) {
+//                 result += st.top();
+//                 st.pop();
+//             }
+//             st.push(c);
+//         }
+//     }
+    
+//     while(!st.empty()) {
+//         result += st.top();
+//         st.pop();
+//     }
+    
+//     return result;
+// }
 
 
 
@@ -1804,4 +1852,117 @@ using namespace std;
 //     } 
 //         return st.top();
 // }
+
+// --------------------------------------------------Queue-------------------------------------------------------------
+// dequeue ----> ] [Front] [][][] [Rear] [ <---- enqueue  #FIFO 
+// operation:- enqueue(x),dequeue(),getFront(),getRear(),size(),isEmpty() etc.
+// application:- 
+// a) single resource and multiple consumers  e.g ticket system 
+// b) synchronization between slow and fast device 
+// c) in operating system (semaphores,fcfs,spooling , buffers for device like keyword )
+// d) in computer network (routers/switches and mail queues)
+// e) variations :  deque , priority queue and doubly ended priority queue
+
+
+// struct Queue{
+//     int *arr;
+//     int cap,size;
+
+//     Queue(int c){
+//         cap=c;
+//         size=0;
+//         arr=new int[cap];
+//     }
+
+//     bool isFull() {return (size==cap);}
+//     bool isEmpty() {return (size==0);}
+
+//     void enqueue(int x){
+//         if(isFull){
+//             cout<<"Queue bhr gya😊"<<endl;
+//             return;
+//         }
+//         arr[size]=x; 
+//         size++;
+//     }
+//     void dequeue(){
+//         if(isEmpty){
+//             cout<<"Queue khali hai😊"<<endl;
+//             return;
+//         }
+//         for(int i = 0; i < size-1; i++){
+//             arr[i]=arr[i+1];
+//         }
+//         size--;
+//     }
+//     int getFront(){
+//         if(isEmpty){
+//             cout<<"stack khali hai😊"<<endl;
+//             return -1;
+//         }else{
+//             return 0;
+//         }
+//     }
+//     int getRear(){
+//         if(isEmpty){
+//             cout<<"stack khali hai😊"<<endl;
+//             return -1;
+//         }else{
+//             return size-1;
+//         }
+//     }
+
+// }
+
+// using circular array --> 0(1)=dequeue operation
+struct Queue{
+    int *arr;
+    int front,cap,size;
+    Queue(int c){
+        cap=c;
+        size=0;
+        front=0;
+        arr=new int[cap];
+    }
+
+    bool isFull() {return (size==cap);}
+    bool isEmpty() {return (size==0);}
+
+    void enqueue(int x){
+        if(isFull){
+            cout<<"Queue bhr gya😊"<<endl;
+            return;
+        }
+        int rear=getRear();
+        rear=(rear+1)%cap;
+        arr[rear]=x;
+        size++;
+    }
+    void dequeue(){
+        if(isEmpty){
+            cout<<"Queue khali hai😊"<<endl;
+            return;
+        }
+        front=front+1/cap;
+        size--;
+
+    }
+    int getFront(){
+        if(isEmpty){
+            cout<<"stack khali hai😊"<<endl;
+            return -1;
+        }else{
+            return front;
+        }
+    }
+    int getRear(){
+        if(isEmpty){
+            cout<<"stack khali hai😊"<<endl;
+            return -1;
+        }else{
+            return (front+size-1)%cap;
+        }
+    }
+
+}
 
