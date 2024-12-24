@@ -1915,54 +1915,338 @@ using namespace std;
 // }
 
 // using circular array --> 0(1)=dequeue operation
-struct Queue{
-    int *arr;
-    int front,cap,size;
-    Queue(int c){
-        cap=c;
-        size=0;
-        front=0;
-        arr=new int[cap];
-    }
+// struct Queue{
+//     int *arr;
+//     int front,cap,size;
+//     Queue(int c){
+//         cap=c;
+//         size=0;
+//         front=0;
+//         arr=new int[cap];
+//     }
 
-    bool isFull() {return (size==cap);}
-    bool isEmpty() {return (size==0);}
+//     bool isFull() {return (size==cap);}
+//     bool isEmpty() {return (size==0);}
 
-    void enqueue(int x){
-        if(isFull){
-            cout<<"Queue bhr gya😊"<<endl;
-            return;
-        }
-        int rear=getRear();
-        rear=(rear+1)%cap;
-        arr[rear]=x;
-        size++;
-    }
-    void dequeue(){
-        if(isEmpty){
-            cout<<"Queue khali hai😊"<<endl;
-            return;
-        }
-        front=front+1/cap;
-        size--;
+//     void enqueue(int x){
+//         if(isFull){
+//             cout<<"Queue bhr gya😊"<<endl;
+//             return;
+//         }
+//         int rear=getRear();
+//         rear=(rear+1)%cap;
+//         arr[rear]=x;
+//         size++;
+//     }
+//     void dequeue(){
+//         if(isEmpty){
+//             cout<<"Queue khali hai😊"<<endl;
+//             return;
+//         }
+//         front=front+1/cap;
+//         size--;
 
-    }
-    int getFront(){
-        if(isEmpty){
-            cout<<"stack khali hai😊"<<endl;
-            return -1;
-        }else{
-            return front;
-        }
-    }
-    int getRear(){
-        if(isEmpty){
-            cout<<"stack khali hai😊"<<endl;
-            return -1;
-        }else{
-            return (front+size-1)%cap;
-        }
-    }
+//     }
+//     int getFront(){
+//         if(isEmpty){
+//             cout<<"stack khali hai😊"<<endl;
+//             return -1;
+//         }else{
+//             return front;
+//         }
+//     }
+//     int getRear(){
+//         if(isEmpty){
+//             cout<<"stack khali hai😊"<<endl;
+//             return -1;
+//         }else{
+//             return (front+size-1)%cap;
+//         }
+//     }
+// }
 
-}
+// implement dequeue using link list 
+// struct node{
+//     int data;
+//     node* next;
+//     node(int x){
+//         data=x;
+//         next=NULL;
+//     }
+// };
+// struct queue{
+//     int size;
+//     node* front, *rear;
+//     queue(){
+//         size=0;
+//         front=NULL;
+//         rear=NULL;
+//     }
+
+//     void enqueue(){
+//         node* temp=new node(x);
+//         size++;
+//         if(front==NULL){
+//             front=temp;
+//             rear=temp;
+//             return;
+//         }
+//         rear->next=temp;
+//         rear=temp;
+//     }
+//     void dequeue(){
+//         if(front==NULL){
+//             return;
+//         }
+//         size--;
+//         node* temp=front;
+//         front=front->next;
+//         if(front==NULL){
+//             rear=NULL;
+//         }
+//         delete(temp);
+//     }
+// };
+
+// queue in cpp stl- queue can be implemented on any underlying container that provides thr following operations-
+// empty(),size(),front(),back(),push_back(),pop_front();
+// queue<int>q; operations->push(),pop(),front(),back(),empty(),size(); time complexity = O(1)
+
+// implementing stack using queue- using aux array
+// struct stack{
+//     queue<int> q1,q2;
+//     int top(){}
+//     int size(){}
+//     int pop(){}
+//     void push(int x){
+//         while(q1.empty()==false){
+//             q2.push(q1.top());
+//             q1.pop();
+//         }
+//         q1.push(x);
+//         while(q2.empty()==false){
+//             q1.push(q2.top());
+//             q2.pop();
+//         }
+
+//     }
+// }
+
+// reversing a queue
+// iterative:
+// queue<int> reverse(queue<int> & q){
+//     stack<int>s;
+//     while(q.empty()==false){
+//         s.push(q.front());
+//         q.pop();
+//     }
+//     while(s.empty()==false){
+//         q.push(s.top());
+//         s.pop();
+//     }
+//     return q;
+// }
+// // recursive:
+// queue<int> reverseQueue(queue<int> &q) {
+//     if(q.empty()){
+//         return q;
+//     }
+//     int x=q.front();
+//     q.pop();
+//     reverseQueue(q);
+//     q.push(x);
+//     return q;
+    
+// }
+
+// generate number with given digit 
+// void printfirstN(int n){
+//     queue<int> q;
+//     q.push("5");
+//     q.push("6");
+//     for(int i=0; i<n; i++){
+//         string curr=q.top();
+//         cout<<curr<<" ";
+//         q.pop();
+//         q.push(curr+"5");
+//         q.push(curr+"6");
+//     }
+// }
+
+// ----------------------------------------------------Deque----------------------------------------------------------
+// dequestand for doubly ended queue
+// we can insert or delete from front as well as from rear 
+//implementation- 
+// either using doubly linklist or circular array
+//application - 
+//  a deque can be uised as both stack and queue
+//  maintaining history of actions
+// a steal process scheduling algo
+// implementing a priority queue with two types of priorities 
+// max/min of all subarray of size k in anarray
+
+// implementation using circular array
+// struct Deque{
+//     int *arr;
+//     int front, size , cap;
+//     Deque(int c){
+//         arr=new int[cap];
+//         cap=c;
+//         size=0;
+//         front=0;
+//     }
+//     bool isFull() {return (size==cap);}
+//     bool isEmpty() {return (size==0);}
+
+//     void insertRear(int x){
+//         if(isFull) return;
+//         int rear = (front+size)%cap;
+//         arr[rear]=x
+//         size++;
+//     }
+//     void deleteRear(){
+//         if(isEmpty) return ;
+//         size--;
+//     }
+//     int getRear(){
+//         if(isEmpty) return -1;
+//         else return (front+size-1)%cap;
+//     }
+
+//     void insertFront(int x){
+//         if(isFull) return;
+//         front=(front+cap-1)%cap;
+//         arr[front]=x;
+//         size++;
+//     }
+//     void deleteFront(int x){
+//         if(isEmpty) return;
+//         front=(front+1)%cap;
+//         size--;
+//     }
+//     int getFront(){
+//         if(isEmpty) return -1;
+//         else return front;
+//     }
+// }
+
+
+// deque in cpp stl-it allows us to random access , also allow to arbitary number of insertion in O(1) time
+// deque<datatype>variableName;
+// operations-push_front(),push_back(),front(),back(),pop_front(),pop_back(),insert(iterator,value),size()
+// time complexity of all opeation in cpp = O(1);
+// in cpp deque provide us random access which is not possible if we implement deque using doubly link list but
+//  possible with circular array but there is a problem with it it may costly when element are more than capacity 
+// so there is trick to implement deque in cpp ...[ pointer[0] ]  [ pointer[1] ]  [ pointer[2] ].......
+//                                                    //|\\           //|\\          //|\\
+//                                                  [][][][][]      [][][][][]     [][][][][]
+// eg:
+// int main(){
+//     deque<int> dq=[10,15,30,5,12];
+//     int it= dq.begin(); //it=0;
+//     int it++;           //it=1
+//     dq.insert(it,20);   // insert operation insert value just before the iterator hence [10,20,15,30,5,12]
+//     dq.pop_front();     //[20,15,30,5,12]
+//     dq.pop_back();      //[20,15,30,5]
+//     cout<<dq.size();    // 4
+//     return;
+// }
+
+// data structure with min/max operation(can be implement using deque)
+// struct myDs{
+//     deque<int>dq;
+//     void insertMin(int x){
+//         dq.push_front(x);
+//     }
+//     void insertMax(int x){
+//         dq.push_back(x);
+//     }
+//     int getMin(){
+//         return dq.front();
+//     }
+//     int getMax(){
+//         return dq.back();
+//     }
+//     int extractMin(){
+//         return dq.pop_front();
+//     }
+//     int extractMax(){
+//         return dq.pop_back();
+//     }
+// };
+
+// printmax
+// vector<int> maxOfSubarrays(vector<int>& arr, int k) {
+//     deque<int> dq;
+//     vector<int> ans;
+//     for (int i = 0; i < k; i++) {
+//         while (!dq.empty() && arr[i] >= arr[dq.back()]) {
+//             dq.pop_back();
+//         }
+//         dq.push_back(i);
+//     }
+//     for (int i = k; i < arr.size(); i++) {
+//         ans.push_back(arr[dq.front()]);
+//         while (!dq.empty() && dq.front() == i - k) {
+//             dq.pop_front();
+//         }
+//         while (!dq.empty() && arr[i] >= arr[dq.back()]) {
+//             dq.pop_back();
+//         }
+//         dq.push_back(i);
+//     }
+//     ans.push_back(arr[dq.front()]);
+//     return ans;
+// }
+
+//  int firstPetrol(int petrol[],int dist[],int n){
+//     for(int i=0; i < n; i++){
+//         int curr=0;
+//         int end=start;
+//         while(true){
+//             curr+=petrol[end]-dist[end];
+//             if(curr<0) break;
+//             end=end+1%n;
+//             if(start==end)
+//             return start+1;
+//         }
+//     }
+//     return -1;
+//  }
+
+// int circularTour(vector<int>& a1, vector<int>& a2) {
+//     int curr = 0;
+//     deque<int> dq;
+//     int n=a1.size();
+
+//     for(int i = 0; i < 2 * n; i++) {
+//         int idx=i % n;
+//         dq.push_back(idx);
+//         curr+=a1[idx] - a2[idx];
+
+//         while(curr < 0 && !dq.empty()) {
+//             curr-=a1[dq.front()] - a2[dq.front()];
+//             dq.pop_front();
+//         }
+//         if (dq.size() == n) {
+//             return dq.front();
+//         }
+//     }
+
+//     return -1;
+// }
+
+// int circularTour(vector<int>& a1, vector<int>& a2) { 
+//     int start=0, curr=0, deficit=0;
+//     for(int i=0; i < a1.size(); i++) {
+//         curr+=a1[i] - a2[i];
+//         if (curr < 0) {
+//             start=i+1;
+//             deficit+=curr;
+//             curr = 0;
+//         }
+//     }
+
+//     return(curr+deficit >= 0) ? start: -1;
+// }
 
