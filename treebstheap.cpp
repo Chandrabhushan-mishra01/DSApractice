@@ -1,10 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int main(){
-    cout<<1<<endl;
-    return 0;
-}
+// int main(){
+//     cout<<1<<endl;
+//     return 0;
+// }
 
 
 // -------------------------------------------------tree-----------------------------------------------------------------
@@ -31,3 +31,12 @@ int main(){
 //     root->right = new node(30);
 //     root->left->left = new node(40);
 // }
+
+// tree traversal: 1)breath first(or level order).  2) depth first - a)inorder b)preorder C)postorder
+// df traversal -          /  traverse root              there are factorial 3 way to do these task
+//              recursuve -   traversse left subtree     front 6 way three are famous :
+//                         \  traverse right subtree     inorder preorder and postorder(in these three permutation we visit left subtree before right subtree).
+// inorder   - (left root right)
+// preorder  - (root left right)    //# left - left subtree //# right - right subtree
+// postorder - (left right root)
+// implementation : 
