@@ -12,8 +12,8 @@ using namespace std;
 // application: To represent hierarchical data (organization structure, folder structure, xml/html content(json object), in oop)
 //              binary search tree, binary heap, b ans b+ tree in DBMS, spanning and shortest path tree in computer network,
 //              parse tree, expression tree in compiler, trie, suffix tree, binary index tree, segment tree
-// Binary tree: every node has at most two children (1 or 2)                                           eg.  *l {30} *r
-//              every node has tree fields ---> [  [*left pointer] [key or data] [*right pointer]  ] :      /        \
+// Binary tree: every node has at most two children (1 or 2)                                           eg.  [*l] {30} [*r]
+//              every node has tree fields ---> [  [*left pointer] [key or data] [*right pointer]  ] :      /            \
 // c++ implementation to represent the binary tree 
 // struct node{
 //     int key;
@@ -40,3 +40,4 @@ using namespace std;
 // preorder  - (root left right)    //# left - left subtree //# right - right subtree
 // postorder - (left right root)
 // implementation : 
+
