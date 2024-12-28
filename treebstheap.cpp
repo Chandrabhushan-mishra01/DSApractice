@@ -97,6 +97,14 @@ void printNodeAtdisK(node *root, int k) {
     }
 }
 
+void levelOrder(node* root) {
+    int h = heightOfBt(root);
+    for (int i = 0; i < h; ++i) {         //TC:O(h*n)
+        cout << "Level " << i+1 << ": ";
+        printNodeAtdisK(root, i);
+        cout << endl;
+    }
+}
 
 int main() {
     // Creating nodes
@@ -109,10 +117,11 @@ int main() {
     root->right->right = new node(70);
 
     // Printing nodes at distance k
-    int k = 2;
-    cout << "Nodes at distance " << k << ": ";
-    printNodeAtdisK(root, k);
-    cout << endl;
+    // int k = 2;
+    // cout << "Nodes at distance " << k << ": ";
+    // printNodeAtdisK(root, k);
+    // cout << endl;
+    levelOrder(root);
 
     return 0;
 }
