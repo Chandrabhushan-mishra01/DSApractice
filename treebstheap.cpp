@@ -106,22 +106,39 @@ void levelOrder(node* root) {
     }
 }
 
-int main() {
-    // Creating nodes
-    node *root = new node(10);
-    root->left = new node(20);
-    root->right = new node(30);
-    root->left->left = new node(40);
-    root->left->right = new node(50);
-    root->right->left = new node(60);
-    root->right->right = new node(70);
+void levelOrder01(node* root) {
+    if (root == NULL) {
+        return;
+    }
+    queue<node*> q;
+    q.push(root);
 
-    // Printing nodes at distance k
-    // int k = 2;
-    // cout << "Nodes at distance " << k << ": ";
-    // printNodeAtdisK(root, k);
-    // cout << endl;
-    levelOrder(root);
+    while (!q.empty()) {
+        node* curr = q.front();
+        q.pop();
+        cout << curr->key << " ";
+        if (curr->left != NULL) {
+            q.push(curr->left);
+        }
+        if (curr->right != NULL) {
+            q.push(curr->right);
+        }
+    }
+}
+
+int main() {
+    node* root = new node(1);
+    root->left = new node(2);
+    root->right = new node(3);
+    root->left->left = new node(4);
+    root->left->right = new node(5);
+    root->right->left = new node(6);
+    root->right->right = new node(7);
+
+    cout << "Level Order Traversal: ";
+    levelOrder01(root);
+    cout << endl;
 
     return 0;
 }
+
