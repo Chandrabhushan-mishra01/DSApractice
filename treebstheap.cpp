@@ -175,6 +175,15 @@ void levelOrder03(node* root) {
     }
 } 
 
+int sizeOfBt(node *root){
+    if(root == nullptr){
+        return 0;            //TC-O(n) and AS-O(height of BT)
+    }else{                                             
+        return 1+sizeOfBt(root->left)+sizeOfBt(root->right);
+    }
+
+}
+
 int main() {
     node* root = new node(1);
     root->left = new node(2);
@@ -185,7 +194,7 @@ int main() {
     root->right->right = new node(7);
 
     cout << "Level Order Traversal: "<<endl;
-    levelOrder03(root);
+    cout<<sizeOfBt(root);
     cout << endl;
 
     return 0;
