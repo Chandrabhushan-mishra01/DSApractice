@@ -75,6 +75,17 @@ void postorder(node *root){
         cout << root->key << " ";
     }
 }
+
+int heightOfBt(node *root) {
+    if (root == NULL) {
+        return 0; 
+    }
+    int leftHeight = heightOfBt(root->left);  
+    int rightHeight = heightOfBt(root->right); 
+    return max(leftHeight, rightHeight) + 1; 
+}
+
+
 int main() {
     // Creating nodes
     node *root = new node(10);
@@ -86,9 +97,9 @@ int main() {
     root->right->right = new node(70);
 
     // Performing in-order traversal
-    cout << "Inorder traversal of the binary tree: ";
-    inorder(root);
-    cout << endl;
+    // cout << "Inorder traversal of the binary tree: ";
+    // inorder(root);
+    cout << heightOfBt(root);
 
     return 0;
 }
