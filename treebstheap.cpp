@@ -85,6 +85,18 @@ int heightOfBt(node *root) {
     return max(leftHeight, rightHeight) + 1; 
 }
 
+void printNodeAtdisK(node *root, int k) {
+    if (root == NULL) {
+        return;
+    }
+    if (k == 0) {
+        cout << root->key << " ";
+    } else {
+        printNodeAtdisK(root->left, k - 1);
+        printNodeAtdisK(root->right, k - 1);
+    }
+}
+
 
 int main() {
     // Creating nodes
@@ -96,10 +108,11 @@ int main() {
     root->right->left = new node(60);
     root->right->right = new node(70);
 
-    // Performing in-order traversal
-    // cout << "Inorder traversal of the binary tree: ";
-    // inorder(root);
-    cout << heightOfBt(root);
+    // Printing nodes at distance k
+    int k = 2;
+    cout << "Nodes at distance " << k << ": ";
+    printNodeAtdisK(root, k);
+    cout << endl;
 
     return 0;
 }
