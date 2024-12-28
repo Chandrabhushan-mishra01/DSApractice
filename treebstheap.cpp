@@ -125,6 +125,31 @@ void levelOrder01(node* root) {
         }
     }
 }
+//level order traversal line by line by adding null 
+void levelOrder02(node* root) {  
+    if (root == NULL) {
+        return;
+    }
+    queue<node*> q;
+    q.push(root);
+    q.push(NULL);
+    while (q.size()>1) {
+        node* curr = q.front();
+        q.pop();
+        if(curr==NULL){
+            cout<<endl;
+            q.push(NULL);
+            continue;
+        }
+        cout << curr->key << " ";
+        if (curr->left != NULL) {
+            q.push(curr->left);
+        }
+        if (curr->right != NULL) {
+            q.push(curr->right);
+        }
+    }
+}
 
 int main() {
     node* root = new node(1);
@@ -135,8 +160,8 @@ int main() {
     root->right->left = new node(6);
     root->right->right = new node(7);
 
-    cout << "Level Order Traversal: ";
-    levelOrder01(root);
+    cout << "Level Order Traversal: "<<endl;
+    levelOrder02(root);
     cout << endl;
 
     return 0;
