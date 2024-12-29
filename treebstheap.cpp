@@ -277,17 +277,36 @@ bool isBalanced01(node *root) {
     return isBalancedUtil(root) != -1;
 }
 
+
+int maxWidth(node *root) {
+    if (root == nullptr) return 0;
+    queue<node *> q;
+    q.push(root);
+    int ans = 0;
+    while (!q.empty()) {
+        int count = q.size();  
+        ans = max(ans, count);
+        for (int i = 0; i < count; i++) {
+            node *curr = q.front();
+            q.pop();
+            if (curr->left != nullptr)
+                q.push(curr->left);
+
+            if (curr->right != nullptr)
+                q.push(curr->right);
+        }
+    }
+    return ans;
+}
+
 int main() {
     node *root = new node(10);
     root->left = new node(5);
     root->right = new node(30);
     root->right->left = new node(15);
     root->right->left->left = new node(12);
-
-    if (isBalanced01(root))
-        cout << "Balanced";
-    else
-        cout << "Not Balanced";
+     
+    cout << maxWidth(root);
 
     return 0;
 }
