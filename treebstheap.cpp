@@ -249,6 +249,14 @@ bool childSum(node *root){
     return (root->key == sum && childSum(root->left) && childSum(root->left) );
 }
 
+bool isBalanced(node *root){
+    if(root == nullptr) return true;
+    int lh = heightOfBt(root->left);    //TC-O(n^2)
+    int rh = heightOfBt(root->right);
+    return (abs(lh-rh) <= 1  && isBalanced(root->left)) && isBalanced(root->right);
+}
+
+
 
 int main() {
     node* root = new node(11);
@@ -260,7 +268,7 @@ int main() {
     root->right->right = new node(5);
 
     cout << "Level Order Traversal: "<<endl;
-    cout<<childSum(root);
+    cout<<isBalanced(root);
     cout << endl;
 
     return 0;
