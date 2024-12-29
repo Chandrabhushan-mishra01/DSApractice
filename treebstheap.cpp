@@ -219,6 +219,24 @@ void printLeftView(node *root){
     }
 }
 
+// recursive solution:
+int maxlevel=0;
+void printLeft02(node *root, int level){
+    if(root == nullptr){
+        return;
+    }
+    if(maxlevel<level){
+        cout << root->key << " ";
+        maxlevel=level;
+    }
+    printLeft02(root->left,level+1);
+    printLeft02(root->right,level+1);
+}
+void printLeftView02(node* root){
+    printLeft02(root,1);
+}
+
+
 int main() {
     node* root = new node(1);
     root->left = new node(2);
@@ -229,7 +247,7 @@ int main() {
     root->right->right = new node(7);
 
     cout << "Level Order Traversal: "<<endl;
-    printLeftView(root);
+    printLeftView02(root);
     cout << endl;
 
     return 0;
