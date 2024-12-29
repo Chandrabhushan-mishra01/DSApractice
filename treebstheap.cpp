@@ -192,6 +192,33 @@ int maxInBt(node *root){
     }
 }
 
+//pirnt left view of Binary Tree
+void printLeftView(node *root){
+    if (root == NULL) {
+        return;
+    }
+    queue<node*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+        int count=q.size();
+        for(int i=0;i<count;i++){
+            node* curr = q.front();
+            q.pop();
+            if(i==0){
+                cout << curr->key << " ";
+            }
+            if (curr->left != NULL) {
+                q.push(curr->left);
+            }
+            if (curr->right != NULL) {
+                q.push(curr->right);
+            }
+        }
+        cout<<endl;
+    }
+}
+
 int main() {
     node* root = new node(1);
     root->left = new node(2);
@@ -202,7 +229,7 @@ int main() {
     root->right->right = new node(7);
 
     cout << "Level Order Traversal: "<<endl;
-    cout<<maxInBt(root);
+    printLeftView(root);
     cout << endl;
 
     return 0;
