@@ -258,19 +258,36 @@ bool isBalanced(node *root){
 
 
 
-int main() {
-    node* root = new node(11);
-    root->left = new node(4);
-    root->right = new node(7);
-    root->left->left = new node(1);
-    root->left->right = new node(3);
-    root->right->left = new node(2);
-    root->right->right = new node(5);
+int isBalancedUtil(node *root) {
+    if (root == NULL)
+        return 0;
 
-    cout << "Level Order Traversal: "<<endl;
-    cout<<isBalanced(root);
-    cout << endl;
+    int lh = isBalancedUtil(root->left);
+    if (lh == -1) return -1;
+    int rh = isBalancedUtil(root->right);
+    if (rh == -1) return -1;
+
+    if (abs(lh - rh) > 1)
+        return -1;
+
+    return max(lh, rh) + 1;
+}
+
+bool isBalanced01(node *root) {
+    return isBalancedUtil(root) != -1;
+}
+
+int main() {
+    node *root = new node(10);
+    root->left = new node(5);
+    root->right = new node(30);
+    root->right->left = new node(15);
+    root->right->left->left = new node(12);
+
+    if (isBalanced01(root))
+        cout << "Balanced";
+    else
+        cout << "Not Balanced";
 
     return 0;
 }
-
