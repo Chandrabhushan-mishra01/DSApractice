@@ -184,6 +184,14 @@ int sizeOfBt(node *root){
 
 }
 
+int maxInBt(node *root){
+    if(root == nullptr){
+        return -1;
+    }else{
+        return max(root->key,max(maxInBt(root->left),maxInBt(root->right)));
+    }
+}
+
 int main() {
     node* root = new node(1);
     root->left = new node(2);
@@ -194,7 +202,7 @@ int main() {
     root->right->right = new node(7);
 
     cout << "Level Order Traversal: "<<endl;
-    cout<<sizeOfBt(root);
+    cout<<maxInBt(root);
     cout << endl;
 
     return 0;
