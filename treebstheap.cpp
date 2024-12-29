@@ -79,10 +79,8 @@ void postorder(node *root){
 int heightOfBt(node *root) {
     if (root == NULL) {
         return 0; 
-    }
-    int leftHeight = heightOfBt(root->left);  
-    int rightHeight = heightOfBt(root->right); 
-    return max(leftHeight, rightHeight) + 1; 
+    } 
+    return max(heightOfBt(root->left), heightOfBt(root->right)) + 1; 
 }
 
 void printNodeAtdisK(node *root, int k) {
@@ -236,18 +234,33 @@ void printLeftView02(node* root){
     printLeft02(root,1);
 }
 
+//children sum property(sum(leftchild,rightchild) == its_root)
+bool childSum(node *root){
+    if (root == nullptr) return true;
+    if (root->left == nullptr && root->right == nullptr) return true;
+
+    int sum = 0;
+    if (root->left != nullptr){
+        sum += root->left->key;
+    }
+    if (root->right != nullptr){
+        sum += root->right->key;
+    }
+    return (root->key == sum && childSum(root->left) && childSum(root->left) );
+}
+
 
 int main() {
-    node* root = new node(1);
-    root->left = new node(2);
-    root->right = new node(3);
-    root->left->left = new node(4);
-    root->left->right = new node(5);
-    root->right->left = new node(6);
-    root->right->right = new node(7);
+    node* root = new node(11);
+    root->left = new node(4);
+    root->right = new node(7);
+    root->left->left = new node(1);
+    root->left->right = new node(3);
+    root->right->left = new node(2);
+    root->right->right = new node(5);
 
     cout << "Level Order Traversal: "<<endl;
-    printLeftView02(root);
+    cout<<childSum(root);
     cout << endl;
 
     return 0;
