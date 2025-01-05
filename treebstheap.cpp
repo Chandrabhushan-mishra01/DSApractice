@@ -246,7 +246,7 @@ bool childSum(node *root){
     if (root->right != nullptr){
         sum += root->right->key;
     }
-    return (root->key == sum && childSum(root->left) && childSum(root->left) );
+    return (root->key == sum && childSum(root->left) && childSum(root->right) );
 }
 
 bool isBalanced(node *root){
@@ -297,6 +297,21 @@ int maxWidth(node *root) {
         }
     }
     return ans;
+}
+
+//convert a Binary tree to Doubly link list -- return head of DLL
+node *prev = NULL;
+node *btoDLL(node *root){
+    if (root == nullptr){ return root; }
+    node *head = btoDLL(root->left);
+    if (prev == nullptr){ head == root;}
+    else{
+        root->left = prev;
+        prev->right = root;
+    }
+    prev = root;
+    btoDLL(root->right);
+    return head;
 }
 
 int main() {

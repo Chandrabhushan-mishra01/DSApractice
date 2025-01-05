@@ -564,6 +564,39 @@
 //     }
 // }
 
+#include <bits/stdc++.h>
+using namespace std;
+
+void fun(int arr[], int n, int i, vector<int> &temp) {
+    // Base case
+    if (i == n) {
+        if (temp.size() == 0) {
+            cout << "{}";
+        } else {
+            for (auto &it : temp) {
+                cout << it << " ";
+            }
+        }
+        cout << endl;
+        return;
+    }
+    // Doesn't pick the particular index into subsequence
+    fun(arr, n, i + 1, temp);
+
+    // Pick the particular index into subsequence
+    temp.push_back(arr[i]);
+    fun(arr, n, i + 1, temp);
+    temp.pop_back(); 
+}
+
+int main() {
+    int n = 3;
+    int arr[] = {3, 2, 1};
+    vector<int> temp;
+    fun(arr, n, 0, temp);
+    return 0;
+}
+
 // -----------------------------------------------------------Array--------------------------------------------------------------------------------
 
 
