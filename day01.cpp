@@ -629,38 +629,34 @@
 //     return 0;
 
 // technique to print one ans (print only first sequence whose sum = sum )
-bool fun(int ind, vector<int>& temp, int s, int sum,int arr[],int n){
-    if(ind==n){
-        if(s==sum){
-            for(auto& it : temp){
-                cout<<it<<" ";
-            }
-            return true;
-            cout<<endl;
-        }else
-        return false ;
-    }
-    temp.push_back(arr[ind]);
-    s+=arr[ind];
-    if(fun(ind+1,temp,s,sum,arr,n)) return true;
-    s-=arr[ind];
-    temp.pop_back();
-    
-    if(fun(ind+1,temp,s,sum,arr,n)) return true;
+// bool fun(int ind, vector<int>& temp, int s, int sum,int arr[],int n){
+//     if(ind==n){
+//         if(s==sum){
+//             for(auto& it : temp){
+//                 cout<<it<<" ";
+//             }
+//             return true;
+//             cout<<endl;
+//         }else
+//         return false ;
+//     }
+//     temp.push_back(arr[ind]);
+//     s+=arr[ind];
+//     if(fun(ind+1,temp,s,sum,arr,n)) return true;
+//     s-=arr[ind];
+//     temp.pop_back();
+//     if(fun(ind+1,temp,s,sum,arr,n)) return true;
+//     return false;   
+// }
 
-    return false;  
-    
-}
-
-int main(){
-    int arr[]={1,2,1};
-    int n=3;
-    int sum=2;
-    vector<int>temp;
-    
-    fun(0,temp,0,sum,arr,n);
-    return 0;
-}
+// int main(){
+//     int arr[]={1,2,1};
+//     int n=3;
+//     int sum=2;
+//     vector<int>temp;  
+//     fun(0,temp,0,sum,arr,n);
+//     return 0;
+// }
 
 // -----------------------------------------------------------Array--------------------------------------------------------------------------------
 
