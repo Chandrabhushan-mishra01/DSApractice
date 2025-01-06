@@ -599,23 +599,56 @@
 
 
 // print subsequence whoes sum is equal to sum 
-void fun(int ind, vector<int>& temp, int s, int sum,int arr[],int n){
+// void fun(int ind, vector<int>& temp, int s, int sum,int arr[],int n){
+//     if(ind==n){
+//         if(s==sum){
+//             for(auto& it : temp){
+//                 cout<<it<<" ";
+//             }
+//             cout<<endl;
+//         }
+//         return ;
+//     }
+//     temp.push_back(arr[ind]);
+//     s+=arr[ind];
+//     fun(ind+1,temp,s,sum,arr,n);
+//     s-=arr[ind];
+//     temp.pop_back();
+    
+//     fun(ind+1,temp,s,sum,arr,n);  
+    
+// }
+
+// int main(){
+//     int arr[]={1,2,1};
+//     int n=3;
+//     int sum=2;
+//     vector<int>temp;
+    
+//     fun(0,temp,0,sum,arr,n);
+//     return 0;
+
+// technique to print one ans (print only first sequence whose sum = sum )
+bool fun(int ind, vector<int>& temp, int s, int sum,int arr[],int n){
     if(ind==n){
         if(s==sum){
             for(auto& it : temp){
                 cout<<it<<" ";
             }
+            return true;
             cout<<endl;
-        }
-        return ;
+        }else
+        return false ;
     }
     temp.push_back(arr[ind]);
     s+=arr[ind];
-    fun(ind+1,temp,s,sum,arr,n);
+    if(fun(ind+1,temp,s,sum,arr,n)) return true;
     s-=arr[ind];
     temp.pop_back();
     
-    fun(ind+1,temp,s,sum,arr,n);  
+    if(fun(ind+1,temp,s,sum,arr,n)) return true;
+
+    return false;  
     
 }
 
