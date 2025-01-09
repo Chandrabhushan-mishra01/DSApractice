@@ -314,6 +314,23 @@ node *btoDLL(node *root){
     return head;
 }
 
+int preIndex = 0;
+node* cTree(vector<int>& inorder, vector<int>& preorder, int is, int ie) {
+    if (is > ie) return NULL;
+    node* root = new node(preorder[preIndex++]);
+    int inIndex = -1;
+    for (int i = is; i <= ie; i++) {
+        if (inorder[i] == root->key) {
+            inIndex = i;
+            break;
+        }
+    }
+    root->left = cTree(inorder, preorder, is, inIndex - 1);
+    root->right = cTree(inorder, preorder, inIndex + 1, ie);
+
+    return root;
+}
+
 int main() {
     node *root = new node(10);
     root->left = new node(5);
