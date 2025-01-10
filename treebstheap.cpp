@@ -300,19 +300,19 @@ int maxWidth(node *root) {
 }
 
 //convert a Binary tree to Doubly link list -- return head of DLL
-node *prev = NULL;
-node *btoDLL(node *root){
-    if (root == nullptr){ return root; }
-    node *head = btoDLL(root->left);
-    if (prev == nullptr){ head == root;}
-    else{
-        root->left = prev;
-        prev->right = root;
-    }
-    prev = root;
-    btoDLL(root->right);
-    return head;
-}
+// node *prev = NULL;
+// node *btoDLL(node *root){
+//     if (root == nullptr){ return root; }
+//     node *head = btoDLL(root->left);
+//     if (prev == nullptr){ head == root;}
+//     else{
+//         root->left = prev;
+//         prev->right = root;
+//     }
+//     prev = root;
+//     btoDLL(root->right);
+//     return head;
+// }
 
 int preIndex = 0;
 node* cTree(vector<int>& inorder, vector<int>& preorder, int is, int ie) {
@@ -331,14 +331,57 @@ node* cTree(vector<int>& inorder, vector<int>& preorder, int is, int ie) {
     return root;
 }
 
+
+//  Function to perform spiral order traversal
+void printspiral(node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    queue<node*> q;
+    q.push(root);
+    stack<int> s;
+    bool reverse = false;
+    while (!q.empty()) {
+        int count = q.size();
+        for (int i = 0; i < count; i++) {
+            node* curr = q.front();
+            q.pop();
+            if (reverse) {
+                s.push(curr->key);
+            } else {
+                cout << curr->key << " ";
+            }
+            if (curr->left != nullptr) {
+                q.push(curr->left);
+            }
+            if (curr->right != nullptr) {
+                q.push(curr->right);
+            }
+        }
+        if (reverse) {
+            while (!s.empty()) {
+                cout << s.top() << " ";
+                s.pop();
+            }
+        }
+        reverse = !reverse; 
+        cout << endl;
+    }
+}
+
 int main() {
-    node *root = new node(10);
-    root->left = new node(5);
-    root->right = new node(30);
-    root->right->left = new node(15);
-    root->right->left->left = new node(12);
-     
-    cout << maxWidth(root);
+    // Create the binary tree
+    node* root = new node(1);
+    root->left = new node(2);
+    root->right = new node(3);
+    root->left->left = new node(4);
+    root->left->right = new node(5);
+    root->right->left = new node(6);
+    root->right->right = new node(7);
+
+    // Call the spiral order traversal function
+    cout << "Spiral Order Traversal of the Tree: " << endl;
+    printspiral(root);
 
     return 0;
 }
