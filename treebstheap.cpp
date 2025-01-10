@@ -369,8 +369,46 @@ void printspiral(node* root) {
     }
 }
 
+//method02:
+
+void printspiral02(node* root) {
+    if (root == nullptr) {
+        return;
+    }
+    stack<node*> s1;
+    stack<node*> s2;
+    s1.push(root);
+    while (!s1.empty() || !s2.empty()) {
+        while (!s1.empty()) {
+            node* curr = s1.top();
+            s1.pop();
+            cout << curr->key << " ";
+            if (curr->left != nullptr) {
+                s2.push(curr->left);
+            }
+            if (curr->right != nullptr) {
+                s2.push(curr->right);
+            }
+        }
+        cout<<endl;
+        while (!s2.empty()) {
+            node* curr = s2.top();
+            s2.pop();
+            cout << curr->key << " ";
+
+            if (curr->right != nullptr) {
+                s1.push(curr->right);
+            }
+            if (curr->left != nullptr) {
+                s1.push(curr->left);
+            }
+            
+        }
+        cout<<endl;
+    }
+}
+
 int main() {
-    // Create the binary tree
     node* root = new node(1);
     root->left = new node(2);
     root->right = new node(3);
@@ -379,9 +417,8 @@ int main() {
     root->right->left = new node(6);
     root->right->right = new node(7);
 
-    // Call the spiral order traversal function
     cout << "Spiral Order Traversal of the Tree: " << endl;
-    printspiral(root);
+    printspiral02(root);
 
     return 0;
 }
