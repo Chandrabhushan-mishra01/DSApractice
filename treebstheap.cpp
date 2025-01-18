@@ -431,7 +431,7 @@ int diameter(node *root){
 // Efficient solution
 int res = 0;
 
-int height(Node* root) {
+int heighte(node* root) {
     if (root == nullptr) return 0;
     int lh = height(root->left);
     int rh = height(root->right);
@@ -439,7 +439,7 @@ int height(Node* root) {
     return 1 + max(lh, rh);
 }
 
-int diameter(Node* root) {
+int diametere(node* root) {
     res = 0;
     height(root);
     return res;
@@ -447,7 +447,29 @@ int diameter(Node* root) {
 
 
 
+//LCA Naive solution
+bool findpath(node* root, vector<node*>& p, int n) {
+    if (root == nullptr) return false;
+    p.push_back(root);
+    if (root->key == n) return true;
+    if (findpath(root->left, p, n) || findpath(root->right, p, n)) return true;
+    p.pop_back();
+    return false;
+}
+
+node* LCA(node* root, int n1, int n2) {
+    vector<node*> path1, path2;
+    if (findpath(root, path1, n1) == false || findpath(root, path2, n2) == false) return nullptr;
+    for (int i = 0; i < path1.size() - 1 && i < path2.size() - 1; i++) {
+        if (path1[i + 1] != path2[i + 1]) {
+            return path1[i];
+        }
+    }
+    return nullptr;
+}
+
 int main() {
+    // Create a sample binary tree
     node* root = new node(1);
     root->left = new node(2);
     root->right = new node(3);
@@ -456,8 +478,15 @@ int main() {
     root->right->left = new node(6);
     root->right->right = new node(7);
 
-    cout << "Spiral Order Traversal of the Tree: " << endl;
-    printspiral02(root);
+    int n1 = 4, n2 = 5;
+
+    node* lca = LCA(root, n1, n2);
+    if (lca != nullptr) {
+        cout << "LCA of " << n1 << " and " << n2 << " is: " << lca->key<< endl;
+    } else {
+        cout << "LCA does not exist." << endl;
+    }
 
     return 0;
 }
+
