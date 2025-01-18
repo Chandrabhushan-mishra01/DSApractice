@@ -8,7 +8,7 @@ using namespace std;
 
 
 // -------------------------------------------------tree-----------------------------------------------------------------
-// term: node, root, leaf, child, parent, subtree, descendants, ancestors, degree(no. of child ), internal
+// term: node, root, leaf, child, parent, subtree, descendants, ancestors, degree(no. of connected nodes), internal
 // application: To represent hierarchical data (organization structure, folder structure, xml/html content(json object), in oop)
 //              binary search tree, binary heap, b ans b+ tree in DBMS, spanning and shortest path tree in computer network,
 //              parse tree, expression tree in compiler, trie, suffix tree, binary index tree, segment tree
@@ -407,6 +407,45 @@ void printspiral02(node* root) {
         cout<<endl;
     }
 }
+
+// Diameter of Binary Tree
+int height(node *root){
+    if(root == nullptr){
+        return 0;
+    }else{
+        return 1+max(height(root->left),height(root->right));
+    }
+}
+int diameter(node *root){
+    if(root == nullptr){
+        return 0;
+    }
+    int d1 = 1 + height(root->left) + height(root->right);
+
+    int d2 = diameter(root->left);
+    int d3 = diameter(root->right);
+
+    return max(d1,max(d2,d3));
+}
+
+// Efficient solution
+int res = 0;
+
+int height(Node* root) {
+    if (root == nullptr) return 0;
+    int lh = height(root->left);
+    int rh = height(root->right);
+    res = max(res, lh + rh);
+    return 1 + max(lh, rh);
+}
+
+int diameter(Node* root) {
+    res = 0;
+    height(root);
+    return res;
+}
+
+
 
 int main() {
     node* root = new node(1);
