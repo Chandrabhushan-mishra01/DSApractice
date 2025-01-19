@@ -468,6 +468,20 @@ node* LCA(node* root, int n1, int n2) {
     return nullptr;
 }
 
+// for efficient solution 
+// we do normal traversal, and we have following cases for every node
+// cases---> if it is same as n1 or n2, if one of its subtree contains n1 and other contains n2, if one of its subtree contains both n1 and n2
+
+node* LCAeffi(node* root, int n1, int n2){
+    if(root == nullptr) return nullptr;
+    if(root -> key == n1 || root -> key == n2) return root;
+    node* lca1 = LCAeffi(root->left, n1, n2);
+    node* lca2 = LCAeffi(root->right, n1, n2);
+    if(lca1 != nullptr && lca2 != nullptr) return root;
+    if(lca1 != nullptr) return lca1;
+    else return  lca2;
+}
+
 int main() {
     // Create a sample binary tree
     node* root = new node(1);
@@ -480,7 +494,7 @@ int main() {
 
     int n1 = 4, n2 = 5;
 
-    node* lca = LCA(root, n1, n2);
+    node* lca = LCAeffi(root, n1, n2);
     if (lca != nullptr) {
         cout << "LCA of " << n1 << " and " << n2 << " is: " << lca->key<< endl;
     } else {
