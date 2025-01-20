@@ -509,6 +509,87 @@ Question:Given a binary tree and a node data called target.
     return max(lh,rh)+1;
  }
 
+//if any node is targeted node 
+class Solution {
+  public:
+
+    Node* createParentMapping(Node* root, int target, map<Node*, Node*>& nodeToParent) {
+        Node* targetNode = NULL;
+        queue<Node*> q;
+        q.push(root);
+        nodeToParent[root] = NULL;
+    
+        while (!q.empty()) {
+            Node* front = q.front();
+            q.pop();
+    
+            if (front->data == target) {
+                targetNode = front;
+            }
+    
+            if (front->left) {
+                nodeToParent[front->left] = front;
+                q.push(front->left);
+            }
+            if (front->right) {
+                nodeToParent[front->right] = front;
+                q.push(front->right);
+            }
+        }
+    
+        return targetNode;
+    }
+    
+    int burnTree(Node* targetNode, map<Node*, Node*>& nodeToParent) {
+        map<Node*, bool> visited;
+        queue<Node*> q;
+        q.push(targetNode);
+        visited[targetNode] = true;
+    
+        int time = 0;
+    
+        while (!q.empty()) {
+            int size = q.size();
+            bool burnt = false;
+    
+            for (int i = 0; i < size; i++) {
+                Node* current = q.front();
+                q.pop();
+    
+                if (current->left && !visited[current->left]) {
+                    q.push(current->left);
+                    visited[current->left] = true;
+                    burnt = true;
+                }
+    
+                if (current->right && !visited[current->right]) {
+                    q.push(current->right);
+                    visited[current->right] = true;
+                    burnt = true;
+                }
+    
+                if (nodeToParent[current] && !visited[nodeToParent[current]]) {
+                    q.push(nodeToParent[current]);
+                    visited[nodeToParent[current]] = true;
+                    burnt = true;
+                }
+            }
+    
+            if (burnt) {
+                time++;
+            }
+        }
+    
+        return time;
+    }
+    
+    int minTime(Node* root, int target) {
+        map<Node*, Node*> nodeToParent;
+        Node* targetNode = createParentMapping(root, target, nodeToParent);
+        return burnTree(targetNode, nodeToParent);
+    }
+
+};
 int main() {
     // Create a sample binary tree
     node* root = new node(1);
