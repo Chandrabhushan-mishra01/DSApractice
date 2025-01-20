@@ -590,6 +590,32 @@ class Solution {
     }
 
 };
+
+// count nodes in a complete binary tree(which is complete from left to right )
+int countNodes(node* root) {
+    // if(root == NULL) 
+    //     return 0;
+    // else 
+    //     return 1+countNodes(root->left)+countNodes(root->right);
+    
+    // Design an algorithm that runs better than O(n).
+    int lh=0, rh=0;
+    node* curr = root;
+    while (curr != NULL){
+        lh++;
+        curr=curr->left;
+    }
+    curr = root;
+    while (curr != NULL){
+        rh++;
+        curr=curr->right;
+    }
+    if (lh == rh){
+        return pow(2,lh)-1;
+    }
+    else 
+        return 1+countNodes(root->left)+countNodes(root->right);
+}
 int main() {
     // Create a sample binary tree
     node* root = new node(1);
