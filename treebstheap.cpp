@@ -481,6 +481,33 @@ node* LCAeffi(node* root, int n1, int n2){
     if(lca1 != nullptr) return lca1;
     else return  lca2;
 }
+/*
+Question:Given a binary tree and a node data called target. 
+        Find the minimum time required to burn the complete binary tree if the target is set on fire. 
+        It is known that in 1 second all nodes connected to a given node get burned.
+        That is its left child, right child, and parent.
+*/
+//if the targeted node is leaf
+ int a=0;
+ int burnTime(node* root, int leaf, int &dist){
+    if(root==nullptr) return 0;
+    if(root->key==leaf){
+        dist=0;
+        return 1;
+    }
+    int ldist=-1, rdist=-1;
+    int lh = burnTime(root->left, leaf, ldist);
+    int rh = burnTime(root->right, leaf, rdist);
+    if(ldist!=-1){
+        dist=ldist+1;
+        a=max(a,dist+rh);
+    }
+    if(rdist!=-1){
+        dist=rdist+1;
+        res=max(res,dist+lh);
+    }
+    return max(lh,rh)+1;
+ }
 
 int main() {
     // Create a sample binary tree
