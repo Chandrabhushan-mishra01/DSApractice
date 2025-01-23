@@ -671,6 +671,33 @@ class Solution{
         return ans;
     }
 };
+
+vector<int> postOrder(node*root) {
+    // code here
+    stack<node*> s;
+    vector<int> ans;
+    node* curr = root;
+    node* last = NULL;
+
+    while (curr != NULL || !s.empty()) {
+        while (curr != NULL) {
+            s.push(curr);
+            curr = curr->left;
+        }
+        node* peek = s.top();
+
+        if (peek->right != NULL && last != peek->right) {
+            curr = peek->right;
+        } else {
+            ans.push_back(peek->data);
+            last = peek;
+            s.pop();
+        }
+    }
+    return ans;
+}
+
+
 int main() {
     // Create a sample binary tree
     node* root = new node(1);
