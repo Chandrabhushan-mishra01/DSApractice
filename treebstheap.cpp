@@ -618,7 +618,7 @@ int countNodes(node* root) {
 }
 
 void iterativeInorder(node* root){
-    stack <int> s;
+    stack <node*> s;
     node* curr = root;
     while (curr!=nullptr || s.empty()==false){
         while (curr != nullptr){
