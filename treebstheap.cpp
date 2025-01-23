@@ -632,6 +632,45 @@ void iterativeInorder(node* root){
     }
     
 }
+
+class Solution{
+    public:
+    vector<int> preOrder(node* root)
+    {
+
+        // stack<node*> s;              
+        // vector<int> ans;  
+        // if (root == NULL) return ans;  
+        // s.push(root); 
+    
+        // while (!s.empty()) {
+        //     node* curr = s.top();
+        //     s.pop();
+        //     ans.push_back(curr->key); 
+        //     if (curr->right != NULL) s.push(curr->right);
+        //     if (curr->left != NULL) s.push(curr->left);
+        // }
+        // return ans;
+        
+        
+        // *** to optimise space only keep track of right ***
+        stack <node*> s;
+        vector <int> ans;  
+        node* curr = root;
+        while(curr!=NULL || s.empty()==false){
+            while(curr!=NULL){
+                ans.push_back(curr->key);
+                if(curr->right!=NULL) s.push(curr->right);
+                curr=curr->left;
+            }
+            if(s.empty()==false){
+                curr=s.top();
+                s.pop();
+            }
+        }
+        return ans;
+    }
+};
 int main() {
     // Create a sample binary tree
     node* root = new node(1);
