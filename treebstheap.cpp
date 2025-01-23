@@ -616,6 +616,22 @@ int countNodes(node* root) {
     else 
         return 1+countNodes(root->left)+countNodes(root->right);
 }
+
+void iterativeInorder(node* root){
+    stack <int> s;
+    node* curr = root;
+    while (curr!=nullptr || s.empty()==false){
+        while (curr != nullptr){
+            s.push(curr);
+            curr = curr->left;
+        }
+        curr = s.top();
+        s.pop();
+        cout << curr->key << " ";
+        curr = curr->right;
+    }
+    
+}
 int main() {
     // Create a sample binary tree
     node* root = new node(1);
