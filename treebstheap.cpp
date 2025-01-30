@@ -720,3 +720,30 @@ int main() {
     return 0;
 }
 
+
+
+// --------------------------------------------------Binary Search Tree-------------------------------------------
+/*
+
+
+                    |  Array(unsorted)  |Array(sorted)  | Link List    |BST(Balanced)  |Hash Table    |
+search              |   O(n)            |  O(n)         |     O(n)     |   O(log n)    |    O(1)      |
+insert              |   O(1)            |  O(n)         |     O(1)     |   O(log n)    |   O(1)       |
+delete              |   O(n)            |  O(n)         |     O(n)     |   O(log n)    |   O(1)       |
+find closest        |   O(n)            |  O(log n)     |     O(n)     |   O(log n)    |   O(n)       |
+sorted traversal    |   O(n log n)      |  O(n)         |    O(n log n)|   O(n)        |   O(n log n) |
+
+
+---*****NOTES*****---
+1.For every node, keys in left side are smaller and keys in right side are greater.
+2.All keys are typically considered as distinct. 
+3.Like linked list it is a linked data structure.
+                          50
+                        /    \
+                      30      70
+                     /  \    /  \
+                    10  40  60  80
+4.Implement in cpp as map, set, multimap and multiset (and in java as TreeSet and TreeMap).
+
+
+*/
