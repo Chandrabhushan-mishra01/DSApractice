@@ -52,673 +52,653 @@ struct node {
     }
 };
 
-void inorder(node *root) {
-    if (root != NULL) {
-        inorder(root->left);
-        cout << root->key << " ";
-        inorder(root->right);
-    }
-}
-
-void preorder(node *root){
-    if(root != NULL){
-        cout << root->key << " ";
-        inorder(root->left);
-        inorder(root->right);
-    }
-}
-
-void postorder(node *root){
-    if(root != NULL){
-        inorder(root->right); 
-        inorder(root->left);
-        cout << root->key << " ";
-    }
-}
-
-int heightOfBt(node *root) {
-    if (root == NULL) {
-        return 0; 
-    } 
-    return max(heightOfBt(root->left), heightOfBt(root->right)) + 1; 
-}
-
-void printNodeAtdisK(node *root, int k) {
-    if (root == NULL) {
-        return;
-    }
-    if (k == 0) {
-        cout << root->key << " ";
-    } else {
-        printNodeAtdisK(root->left, k - 1);
-        printNodeAtdisK(root->right, k - 1);
-    }
-}
-
-void levelOrder(node* root) {
-    int h = heightOfBt(root);
-    for (int i = 0; i < h; ++i) {         //TC:O(h*n)
-        cout << "Level " << i+1 << ": ";
-        printNodeAtdisK(root, i);
-        cout << endl;
-    }
-}
-
-void levelOrder01(node* root) {
-    if (root == NULL) {
-        return;
-    }
-    queue<node*> q;
-    q.push(root);
-
-    while (!q.empty()) {
-        node* curr = q.front();
-        q.pop();
-        cout << curr->key << " ";
-        if (curr->left != NULL) {
-            q.push(curr->left);
-        }
-        if (curr->right != NULL) {
-            q.push(curr->right);
-        }
-    }
-}
-//level order traversal line by line by adding null 
-void levelOrder02(node* root) {  
-    if (root == NULL) {
-        return;
-    }
-    queue<node*> q;
-    q.push(root);
-    q.push(NULL);
-    while (q.size()>1) {
-        node* curr = q.front();
-        q.pop();
-        if(curr==NULL){
-            cout<<endl;
-            q.push(NULL);
-            continue;
-        }
-        cout << curr->key << " ";
-        if (curr->left != NULL) {
-            q.push(curr->left);
-        }
-        if (curr->right != NULL) {
-            q.push(curr->right);
-        }
-    }
-}
-//level order traversal method 2
-void levelOrder03(node* root) {
-    if (root == NULL) {
-        return;
-    }
-    queue<node*> q;
-    q.push(root);
-
-    while (!q.empty()) {
-        int count=q.size();
-        for(int i=0;i<count;i++){
-            node* curr = q.front();
-            q.pop();
-            cout << curr->key << " ";
-            if (curr->left != NULL) {
-                q.push(curr->left);
-            }
-            if (curr->right != NULL) {
-                q.push(curr->right);
-            }
-        }
-        cout<<endl;
-    }
-} 
-
-int sizeOfBt(node *root){
-    if(root == nullptr){
-        return 0;            //TC-O(n) and AS-O(height of BT)
-    }else{                                             
-        return 1+sizeOfBt(root->left)+sizeOfBt(root->right);
-    }
-
-}
-
-int maxInBt(node *root){
-    if(root == nullptr){
-        return -1;
-    }else{
-        return max(root->key,max(maxInBt(root->left),maxInBt(root->right)));
-    }
-}
-
-//pirnt left view of Binary Tree
-void printLeftView(node *root){
-    if (root == NULL) {
-        return;
-    }
-    queue<node*> q;
-    q.push(root);
-
-    while (!q.empty()) {
-        int count=q.size();
-        for(int i=0;i<count;i++){
-            node* curr = q.front();
-            q.pop();
-            if(i==0){
-                cout << curr->key << " ";
-            }
-            if (curr->left != NULL) {
-                q.push(curr->left);
-            }
-            if (curr->right != NULL) {
-                q.push(curr->right);
-            }
-        }
-        cout<<endl;
-    }
-}
-
-// recursive solution:
-int maxlevel=0;
-void printLeft02(node *root, int level){
-    if(root == nullptr){
-        return;
-    }
-    if(maxlevel<level){
-        cout << root->key << " ";
-        maxlevel=level;
-    }
-    printLeft02(root->left,level+1);
-    printLeft02(root->right,level+1);
-}
-void printLeftView02(node* root){
-    printLeft02(root,1);
-}
-
-//children sum property(sum(leftchild,rightchild) == its_root)
-bool childSum(node *root){
-    if (root == nullptr) return true;
-    if (root->left == nullptr && root->right == nullptr) return true;
-
-    int sum = 0;
-    if (root->left != nullptr){
-        sum += root->left->key;
-    }
-    if (root->right != nullptr){
-        sum += root->right->key;
-    }
-    return (root->key == sum && childSum(root->left) && childSum(root->right) );
-}
-
-bool isBalanced(node *root){
-    if(root == nullptr) return true;
-    int lh = heightOfBt(root->left);    //TC-O(n^2)
-    int rh = heightOfBt(root->right);
-    return (abs(lh-rh) <= 1  && isBalanced(root->left)) && isBalanced(root->right);
-}
-
-
-
-int isBalancedUtil(node *root) {
-    if (root == NULL)
-        return 0;
-
-    int lh = isBalancedUtil(root->left);
-    if (lh == -1) return -1;
-    int rh = isBalancedUtil(root->right);
-    if (rh == -1) return -1;
-
-    if (abs(lh - rh) > 1)
-        return -1;
-
-    return max(lh, rh) + 1;
-}
-
-bool isBalanced01(node *root) {
-    return isBalancedUtil(root) != -1;
-}
-
-
-int maxWidth(node *root) {
-    if (root == nullptr) return 0;
-    queue<node *> q;
-    q.push(root);
-    int ans = 0;
-    while (!q.empty()) {
-        int count = q.size();  
-        ans = max(ans, count);
-        for (int i = 0; i < count; i++) {
-            node *curr = q.front();
-            q.pop();
-            if (curr->left != nullptr)
-                q.push(curr->left);
-
-            if (curr->right != nullptr)
-                q.push(curr->right);
-        }
-    }
-    return ans;
-}
-
-//convert a Binary tree to Doubly link list -- return head of DLL
-// node *prev = NULL;
-// node *btoDLL(node *root){
-//     if (root == nullptr){ return root; }
-//     node *head = btoDLL(root->left);
-//     if (prev == nullptr){ head == root;}
-//     else{
-//         root->left = prev;
-//         prev->right = root;
+// void inorder(node *root) {
+//     if (root != NULL) {
+//         inorder(root->left);
+//         cout << root->key << " ";
+//         inorder(root->right);
 //     }
-//     prev = root;
-//     btoDLL(root->right);
-//     return head;
 // }
 
-int preIndex = 0;
-node* cTree(vector<int>& inorder, vector<int>& preorder, int is, int ie) {
-    if (is > ie) return NULL;
-    node* root = new node(preorder[preIndex++]);
-    int inIndex = -1;
-    for (int i = is; i <= ie; i++) {
-        if (inorder[i] == root->key) {
-            inIndex = i;
-            break;
-        }
-    }
-    root->left = cTree(inorder, preorder, is, inIndex - 1);
-    root->right = cTree(inorder, preorder, inIndex + 1, ie);
+// void preorder(node *root){
+//     if(root != NULL){
+//         cout << root->key << " ";
+//         inorder(root->left);
+//         inorder(root->right);
+//     }
+// }
 
-    return root;
-}
+// void postorder(node *root){
+//     if(root != NULL){
+//         inorder(root->right); 
+//         inorder(root->left);
+//         cout << root->key << " ";
+//     }
+// }
+
+// int heightOfBt(node *root) {
+//     if (root == NULL) {
+//         return 0; 
+//     } 
+//     return max(heightOfBt(root->left), heightOfBt(root->right)) + 1; 
+// }
+
+// void printNodeAtdisK(node *root, int k) {
+//     if (root == NULL) {
+//         return;
+//     }
+//     if (k == 0) {
+//         cout << root->key << " ";
+//     } else {
+//         printNodeAtdisK(root->left, k - 1);
+//         printNodeAtdisK(root->right, k - 1);
+//     }
+// }
+
+// void levelOrder(node* root) {
+//     int h = heightOfBt(root);
+//     for (int i = 0; i < h; ++i) {         //TC:O(h*n)
+//         cout << "Level " << i+1 << ": ";
+//         printNodeAtdisK(root, i);
+//         cout << endl;
+//     }
+// }
+
+// void levelOrder01(node* root) {
+//     if (root == NULL) {
+//         return;
+//     }
+//     queue<node*> q;
+//     q.push(root);
+
+//     while (!q.empty()) {
+//         node* curr = q.front();
+//         q.pop();
+//         cout << curr->key << " ";
+//         if (curr->left != NULL) {
+//             q.push(curr->left);
+//         }
+//         if (curr->right != NULL) {
+//             q.push(curr->right);
+//         }
+//     }
+// }
+// //level order traversal line by line by adding null 
+// void levelOrder02(node* root) {  
+//     if (root == NULL) {
+//         return;
+//     }
+//     queue<node*> q;
+//     q.push(root);
+//     q.push(NULL);
+//     while (q.size()>1) {
+//         node* curr = q.front();
+//         q.pop();
+//         if(curr==NULL){
+//             cout<<endl;
+//             q.push(NULL);
+//             continue;
+//         }
+//         cout << curr->key << " ";
+//         if (curr->left != NULL) {
+//             q.push(curr->left);
+//         }
+//         if (curr->right != NULL) {
+//             q.push(curr->right);
+//         }
+//     }
+// }
+// //level order traversal method 2
+// void levelOrder03(node* root) {
+//     if (root == NULL) {
+//         return;
+//     }
+//     queue<node*> q;
+//     q.push(root);
+
+//     while (!q.empty()) {
+//         int count=q.size();
+//         for(int i=0;i<count;i++){
+//             node* curr = q.front();
+//             q.pop();
+//             cout << curr->key << " ";
+//             if (curr->left != NULL) {
+//                 q.push(curr->left);
+//             }
+//             if (curr->right != NULL) {
+//                 q.push(curr->right);
+//             }
+//         }
+//         cout<<endl;
+//     }
+// } 
+
+// int sizeOfBt(node *root){
+//     if(root == nullptr){
+//         return 0;            //TC-O(n) and AS-O(height of BT)
+//     }else{                                             
+//         return 1+sizeOfBt(root->left)+sizeOfBt(root->right);
+//     }
+
+// }
+
+// int maxInBt(node *root){
+//     if(root == nullptr){
+//         return -1;
+//     }else{
+//         return max(root->key,max(maxInBt(root->left),maxInBt(root->right)));
+//     }
+// }
+
+// //pirnt left view of Binary Tree
+// void printLeftView(node *root){
+//     if (root == NULL) {
+//         return;
+//     }
+//     queue<node*> q;
+//     q.push(root);
+
+//     while (!q.empty()) {
+//         int count=q.size();
+//         for(int i=0;i<count;i++){
+//             node* curr = q.front();
+//             q.pop();
+//             if(i==0){
+//                 cout << curr->key << " ";
+//             }
+//             if (curr->left != NULL) {
+//                 q.push(curr->left);
+//             }
+//             if (curr->right != NULL) {
+//                 q.push(curr->right);
+//             }
+//         }
+//         cout<<endl;
+//     }
+// }
+
+// // recursive solution:
+// int maxlevel=0;
+// void printLeft02(node *root, int level){
+//     if(root == nullptr){
+//         return;
+//     }
+//     if(maxlevel<level){
+//         cout << root->key << " ";
+//         maxlevel=level;
+//     }
+//     printLeft02(root->left,level+1);
+//     printLeft02(root->right,level+1);
+// }
+// void printLeftView02(node* root){
+//     printLeft02(root,1);
+// }
+
+// //children sum property(sum(leftchild,rightchild) == its_root)
+// bool childSum(node *root){
+//     if (root == nullptr) return true;
+//     if (root->left == nullptr && root->right == nullptr) return true;
+
+//     int sum = 0;
+//     if (root->left != nullptr){
+//         sum += root->left->key;
+//     }
+//     if (root->right != nullptr){
+//         sum += root->right->key;
+//     }
+//     return (root->key == sum && childSum(root->left) && childSum(root->right) );
+// }
+
+// bool isBalanced(node *root){
+//     if(root == nullptr) return true;
+//     int lh = heightOfBt(root->left);    //TC-O(n^2)
+//     int rh = heightOfBt(root->right);
+//     return (abs(lh-rh) <= 1  && isBalanced(root->left)) && isBalanced(root->right);
+// }
 
 
-//  Function to perform spiral order traversal
-void printspiral(node* root) {
-    if (root == nullptr) {
-        return;
-    }
-    queue<node*> q;
-    q.push(root);
-    stack<int> s;
-    bool reverse = false;
-    while (!q.empty()) {
-        int count = q.size();
-        for (int i = 0; i < count; i++) {
-            node* curr = q.front();
-            q.pop();
-            if (reverse) {
-                s.push(curr->key);
-            } else {
-                cout << curr->key << " ";
-            }
-            if (curr->left != nullptr) {
-                q.push(curr->left);
-            }
-            if (curr->right != nullptr) {
-                q.push(curr->right);
-            }
-        }
-        if (reverse) {
-            while (!s.empty()) {
-                cout << s.top() << " ";
-                s.pop();
-            }
-        }
-        reverse = !reverse; 
-        cout << endl;
-    }
-}
 
-//method02:
+// int isBalancedUtil(node *root) {
+//     if (root == NULL)
+//         return 0;
 
-void printspiral02(node* root) {
-    if (root == nullptr) {
-        return;
-    }
-    stack<node*> s1;
-    stack<node*> s2;
-    s1.push(root);
-    while (!s1.empty() || !s2.empty()) {
-        while (!s1.empty()) {
-            node* curr = s1.top();
-            s1.pop();
-            cout << curr->key << " ";
-            if (curr->left != nullptr) {
-                s2.push(curr->left);
-            }
-            if (curr->right != nullptr) {
-                s2.push(curr->right);
-            }
-        }
-        cout<<endl;
-        while (!s2.empty()) {
-            node* curr = s2.top();
-            s2.pop();
-            cout << curr->key << " ";
+//     int lh = isBalancedUtil(root->left);
+//     if (lh == -1) return -1;
+//     int rh = isBalancedUtil(root->right);
+//     if (rh == -1) return -1;
 
-            if (curr->right != nullptr) {
-                s1.push(curr->right);
-            }
-            if (curr->left != nullptr) {
-                s1.push(curr->left);
-            }
+//     if (abs(lh - rh) > 1)
+//         return -1;
+
+//     return max(lh, rh) + 1;
+// }
+
+// bool isBalanced01(node *root) {
+//     return isBalancedUtil(root) != -1;
+// }
+
+
+// int maxWidth(node *root) {
+//     if (root == nullptr) return 0;
+//     queue<node *> q;
+//     q.push(root);
+//     int ans = 0;
+//     while (!q.empty()) {
+//         int count = q.size();  
+//         ans = max(ans, count);
+//         for (int i = 0; i < count; i++) {
+//             node *curr = q.front();
+//             q.pop();
+//             if (curr->left != nullptr)
+//                 q.push(curr->left);
+
+//             if (curr->right != nullptr)
+//                 q.push(curr->right);
+//         }
+//     }
+//     return ans;
+// }
+
+// //convert a Binary tree to Doubly link list -- return head of DLL
+// // node *prev = NULL;
+// // node *btoDLL(node *root){
+// //     if (root == nullptr){ return root; }
+// //     node *head = btoDLL(root->left);
+// //     if (prev == nullptr){ head == root;}
+// //     else{
+// //         root->left = prev;
+// //         prev->right = root;
+// //     }
+// //     prev = root;
+// //     btoDLL(root->right);
+// //     return head;
+// // }
+
+// int preIndex = 0;
+// node* cTree(vector<int>& inorder, vector<int>& preorder, int is, int ie) {
+//     if (is > ie) return NULL;
+//     node* root = new node(preorder[preIndex++]);
+//     int inIndex = -1;
+//     for (int i = is; i <= ie; i++) {
+//         if (inorder[i] == root->key) {
+//             inIndex = i;
+//             break;
+//         }
+//     }
+//     root->left = cTree(inorder, preorder, is, inIndex - 1);
+//     root->right = cTree(inorder, preorder, inIndex + 1, ie);
+
+//     return root;
+// }
+
+
+// //  Function to perform spiral order traversal
+// void printspiral(node* root) {
+//     if (root == nullptr) {
+//         return;
+//     }
+//     queue<node*> q;
+//     q.push(root);
+//     stack<int> s;
+//     bool reverse = false;
+//     while (!q.empty()) {
+//         int count = q.size();
+//         for (int i = 0; i < count; i++) {
+//             node* curr = q.front();
+//             q.pop();
+//             if (reverse) {
+//                 s.push(curr->key);
+//             } else {
+//                 cout << curr->key << " ";
+//             }
+//             if (curr->left != nullptr) {
+//                 q.push(curr->left);
+//             }
+//             if (curr->right != nullptr) {
+//                 q.push(curr->right);
+//             }
+//         }
+//         if (reverse) {
+//             while (!s.empty()) {
+//                 cout << s.top() << " ";
+//                 s.pop();
+//             }
+//         }
+//         reverse = !reverse; 
+//         cout << endl;
+//     }
+// }
+
+// //method02:
+
+// void printspiral02(node* root) {
+//     if (root == nullptr) {
+//         return;
+//     }
+//     stack<node*> s1;
+//     stack<node*> s2;
+//     s1.push(root);
+//     while (!s1.empty() || !s2.empty()) {
+//         while (!s1.empty()) {
+//             node* curr = s1.top();
+//             s1.pop();
+//             cout << curr->key << " ";
+//             if (curr->left != nullptr) {
+//                 s2.push(curr->left);
+//             }
+//             if (curr->right != nullptr) {
+//                 s2.push(curr->right);
+//             }
+//         }
+//         cout<<endl;
+//         while (!s2.empty()) {
+//             node* curr = s2.top();
+//             s2.pop();
+//             cout << curr->key << " ";
+
+//             if (curr->right != nullptr) {
+//                 s1.push(curr->right);
+//             }
+//             if (curr->left != nullptr) {
+//                 s1.push(curr->left);
+//             }
             
-        }
-        cout<<endl;
-    }
-}
+//         }
+//         cout<<endl;
+//     }
+// }
 
-// Diameter of Binary Tree
-int height(node *root){
-    if(root == nullptr){
-        return 0;
-    }else{
-        return 1+max(height(root->left),height(root->right));
-    }
-}
-int diameter(node *root){
-    if(root == nullptr){
-        return 0;
-    }
-    int d1 = 1 + height(root->left) + height(root->right);
+// // Diameter of Binary Tree
+// int height(node *root){
+//     if(root == nullptr){
+//         return 0;
+//     }else{
+//         return 1+max(height(root->left),height(root->right));
+//     }
+// }
+// int diameter(node *root){
+//     if(root == nullptr){
+//         return 0;
+//     }
+//     int d1 = 1 + height(root->left) + height(root->right);
 
-    int d2 = diameter(root->left);
-    int d3 = diameter(root->right);
+//     int d2 = diameter(root->left);
+//     int d3 = diameter(root->right);
 
-    return max(d1,max(d2,d3));
-}
+//     return max(d1,max(d2,d3));
+// }
 
-// Efficient solution
-int res = 0;
+// // Efficient solution
+// int res = 0;
 
-int heighte(node* root) {
-    if (root == nullptr) return 0;
-    int lh = height(root->left);
-    int rh = height(root->right);
-    res = max(res, lh + rh);
-    return 1 + max(lh, rh);
-}
+// int heighte(node* root) {
+//     if (root == nullptr) return 0;
+//     int lh = height(root->left);
+//     int rh = height(root->right);
+//     res = max(res, lh + rh);
+//     return 1 + max(lh, rh);
+// }
 
-int diametere(node* root) {
-    res = 0;
-    height(root);
-    return res;
-}
+// int diametere(node* root) {
+//     res = 0;
+//     height(root);
+//     return res;
+// }
 
 
 
-//LCA Naive solution
-bool findpath(node* root, vector<node*>& p, int n) {
-    if (root == nullptr) return false;
-    p.push_back(root);
-    if (root->key == n) return true;
-    if (findpath(root->left, p, n) || findpath(root->right, p, n)) return true;
-    p.pop_back();
-    return false;
-}
+// //LCA Naive solution
+// bool findpath(node* root, vector<node*>& p, int n) {
+//     if (root == nullptr) return false;
+//     p.push_back(root);
+//     if (root->key == n) return true;
+//     if (findpath(root->left, p, n) || findpath(root->right, p, n)) return true;
+//     p.pop_back();
+//     return false;
+// }
 
-node* LCA(node* root, int n1, int n2) {
-    vector<node*> path1, path2;
-    if (findpath(root, path1, n1) == false || findpath(root, path2, n2) == false) return nullptr;
-    for (int i = 0; i < path1.size() - 1 && i < path2.size() - 1; i++) {
-        if (path1[i + 1] != path2[i + 1]) {
-            return path1[i];
-        }
-    }
-    return nullptr;
-}
+// node* LCA(node* root, int n1, int n2) {
+//     vector<node*> path1, path2;
+//     if (findpath(root, path1, n1) == false || findpath(root, path2, n2) == false) return nullptr;
+//     for (int i = 0; i < path1.size() - 1 && i < path2.size() - 1; i++) {
+//         if (path1[i + 1] != path2[i + 1]) {
+//             return path1[i];
+//         }
+//     }
+//     return nullptr;
+// }
 
-// for efficient solution 
-// we do normal traversal, and we have following cases for every node
-// cases---> if it is same as n1 or n2, if one of its subtree contains n1 and other contains n2, if one of its subtree contains both n1 and n2
+// // for efficient solution 
+// // we do normal traversal, and we have following cases for every node
+// // cases---> if it is same as n1 or n2, if one of its subtree contains n1 and other contains n2, if one of its subtree contains both n1 and n2
 
-node* LCAeffi(node* root, int n1, int n2){
-    if(root == nullptr) return nullptr;
-    if(root -> key == n1 || root -> key == n2) return root;
-    node* lca1 = LCAeffi(root->left, n1, n2);
-    node* lca2 = LCAeffi(root->right, n1, n2);
-    if(lca1 != nullptr && lca2 != nullptr) return root;
-    if(lca1 != nullptr) return lca1;
-    else return  lca2;
-}
-/*
-Question:Given a binary tree and a node data called target. 
-        Find the minimum time required to burn the complete binary tree if the target is set on fire. 
-        It is known that in 1 second all nodes connected to a given node get burned.
-        That is its left child, right child, and parent.
-*/
-//if the targeted node is leaf
- int a=0;
- int burnTime(node* root, int leaf, int &dist){
-    if(root==nullptr) return 0;
-    if(root->key==leaf){
-        dist=0;
-        return 1;
-    }
-    int ldist=-1, rdist=-1;
-    int lh = burnTime(root->left, leaf, ldist);
-    int rh = burnTime(root->right, leaf, rdist);
-    if(ldist!=-1){
-        dist=ldist+1;
-        a=max(a,dist+rh);
-    }
-    if(rdist!=-1){
-        dist=rdist+1;
-        res=max(res,dist+lh);
-    }
-    return max(lh,rh)+1;
- }
+// node* LCAeffi(node* root, int n1, int n2){
+//     if(root == nullptr) return nullptr;
+//     if(root -> key == n1 || root -> key == n2) return root;
+//     node* lca1 = LCAeffi(root->left, n1, n2);
+//     node* lca2 = LCAeffi(root->right, n1, n2);
+//     if(lca1 != nullptr && lca2 != nullptr) return root;
+//     if(lca1 != nullptr) return lca1;
+//     else return  lca2;
+// }
+// /*
+// Question:Given a binary tree and a node data called target. 
+//         Find the minimum time required to burn the complete binary tree if the target is set on fire. 
+//         It is known that in 1 second all nodes connected to a given node get burned.
+//         That is its left child, right child, and parent.
+// */
+// //if the targeted node is leaf
+//  int a=0;
+//  int burnTime(node* root, int leaf, int &dist){
+//     if(root==nullptr) return 0;
+//     if(root->key==leaf){
+//         dist=0;
+//         return 1;
+//     }
+//     int ldist=-1, rdist=-1;
+//     int lh = burnTime(root->left, leaf, ldist);
+//     int rh = burnTime(root->right, leaf, rdist);
+//     if(ldist!=-1){
+//         dist=ldist+1;
+//         a=max(a,dist+rh);
+//     }
+//     if(rdist!=-1){
+//         dist=rdist+1;
+//         res=max(res,dist+lh);
+//     }
+//     return max(lh,rh)+1;
+//  }
 
-//if any node is targeted node 
-class Solution {
-  public:
+// //if any node is targeted node 
+// class Solution {
+//   public:
 
-    Node* createParentMapping(Node* root, int target, map<Node*, Node*>& nodeToParent) {
-        Node* targetNode = NULL;
-        queue<Node*> q;
-        q.push(root);
-        nodeToParent[root] = NULL;
+//     Node* createParentMapping(Node* root, int target, map<Node*, Node*>& nodeToParent) {
+//         Node* targetNode = NULL;
+//         queue<Node*> q;
+//         q.push(root);
+//         nodeToParent[root] = NULL;
     
-        while (!q.empty()) {
-            Node* front = q.front();
-            q.pop();
+//         while (!q.empty()) {
+//             Node* front = q.front();
+//             q.pop();
     
-            if (front->data == target) {
-                targetNode = front;
-            }
+//             if (front->data == target) {
+//                 targetNode = front;
+//             }
     
-            if (front->left) {
-                nodeToParent[front->left] = front;
-                q.push(front->left);
-            }
-            if (front->right) {
-                nodeToParent[front->right] = front;
-                q.push(front->right);
-            }
-        }
+//             if (front->left) {
+//                 nodeToParent[front->left] = front;
+//                 q.push(front->left);
+//             }
+//             if (front->right) {
+//                 nodeToParent[front->right] = front;
+//                 q.push(front->right);
+//             }
+//         }
     
-        return targetNode;
-    }
+//         return targetNode;
+//     }
     
-    int burnTree(Node* targetNode, map<Node*, Node*>& nodeToParent) {
-        map<Node*, bool> visited;
-        queue<Node*> q;
-        q.push(targetNode);
-        visited[targetNode] = true;
+//     int burnTree(Node* targetNode, map<Node*, Node*>& nodeToParent) {
+//         map<Node*, bool> visited;
+//         queue<Node*> q;
+//         q.push(targetNode);
+//         visited[targetNode] = true;
     
-        int time = 0;
+//         int time = 0;
     
-        while (!q.empty()) {
-            int size = q.size();
-            bool burnt = false;
+//         while (!q.empty()) {
+//             int size = q.size();
+//             bool burnt = false;
     
-            for (int i = 0; i < size; i++) {
-                Node* current = q.front();
-                q.pop();
+//             for (int i = 0; i < size; i++) {
+//                 Node* current = q.front();
+//                 q.pop();
     
-                if (current->left && !visited[current->left]) {
-                    q.push(current->left);
-                    visited[current->left] = true;
-                    burnt = true;
-                }
+//                 if (current->left && !visited[current->left]) {
+//                     q.push(current->left);
+//                     visited[current->left] = true;
+//                     burnt = true;
+//                 }
     
-                if (current->right && !visited[current->right]) {
-                    q.push(current->right);
-                    visited[current->right] = true;
-                    burnt = true;
-                }
+//                 if (current->right && !visited[current->right]) {
+//                     q.push(current->right);
+//                     visited[current->right] = true;
+//                     burnt = true;
+//                 }
     
-                if (nodeToParent[current] && !visited[nodeToParent[current]]) {
-                    q.push(nodeToParent[current]);
-                    visited[nodeToParent[current]] = true;
-                    burnt = true;
-                }
-            }
+//                 if (nodeToParent[current] && !visited[nodeToParent[current]]) {
+//                     q.push(nodeToParent[current]);
+//                     visited[nodeToParent[current]] = true;
+//                     burnt = true;
+//                 }
+//             }
     
-            if (burnt) {
-                time++;
-            }
-        }
+//             if (burnt) {
+//                 time++;
+//             }
+//         }
     
-        return time;
-    }
+//         return time;
+//     }
     
-    int minTime(Node* root, int target) {
-        map<Node*, Node*> nodeToParent;
-        Node* targetNode = createParentMapping(root, target, nodeToParent);
-        return burnTree(targetNode, nodeToParent);
-    }
+//     int minTime(Node* root, int target) {
+//         map<Node*, Node*> nodeToParent;
+//         Node* targetNode = createParentMapping(root, target, nodeToParent);
+//         return burnTree(targetNode, nodeToParent);
+//     }
 
-};
+// };
 
-// count nodes in a complete binary tree(which is complete from left to right )
-int countNodes(node* root) {
-    // if(root == NULL) 
-    //     return 0;
-    // else 
-    //     return 1+countNodes(root->left)+countNodes(root->right);
+// // count nodes in a complete binary tree(which is complete from left to right )
+// int countNodes(node* root) {
+//     // if(root == NULL) 
+//     //     return 0;
+//     // else 
+//     //     return 1+countNodes(root->left)+countNodes(root->right);
     
-    // Design an algorithm that runs better than O(n).
-    int lh=0, rh=0;
-    node* curr = root;
-    while (curr != NULL){
-        lh++;
-        curr=curr->left;
-    }
-    curr = root;
-    while (curr != NULL){
-        rh++;
-        curr=curr->right;
-    }
-    if (lh == rh){
-        return pow(2,lh)-1;
-    }
-    else 
-        return 1+countNodes(root->left)+countNodes(root->right);
-}
+//     // Design an algorithm that runs better than O(n).
+//     int lh=0, rh=0;
+//     node* curr = root;
+//     while (curr != NULL){
+//         lh++;
+//         curr=curr->left;
+//     }
+//     curr = root;
+//     while (curr != NULL){
+//         rh++;
+//         curr=curr->right;
+//     }
+//     if (lh == rh){
+//         return pow(2,lh)-1;
+//     }
+//     else 
+//         return 1+countNodes(root->left)+countNodes(root->right);
+// }
 
-void iterativeInorder(node* root){
-    stack <node*> s;
-    node* curr = root;
-    while (curr!=nullptr || s.empty()==false){
-        while (curr != nullptr){
-            s.push(curr);
-            curr = curr->left;
-        }
-        curr = s.top();
-        s.pop();
-        cout << curr->key << " ";
-        curr = curr->right;
-    }
+// void iterativeInorder(node* root){
+//     stack <node*> s;
+//     node* curr = root;
+//     while (curr!=nullptr || s.empty()==false){
+//         while (curr != nullptr){
+//             s.push(curr);
+//             curr = curr->left;
+//         }
+//         curr = s.top();
+//         s.pop();
+//         cout << curr->key << " ";
+//         curr = curr->right;
+//     }
     
-}
+// }
 
-class Solution{
-    public:
-    vector<int> preOrder(node* root)
-    {
+// class Solution{
+//     public:
+//     vector<int> preOrder(node* root)
+//     {
 
-        // stack<node*> s;              
-        // vector<int> ans;  
-        // if (root == NULL) return ans;  
-        // s.push(root); 
+//         // stack<node*> s;              
+//         // vector<int> ans;  
+//         // if (root == NULL) return ans;  
+//         // s.push(root); 
     
-        // while (!s.empty()) {
-        //     node* curr = s.top();
-        //     s.pop();
-        //     ans.push_back(curr->key); 
-        //     if (curr->right != NULL) s.push(curr->right);
-        //     if (curr->left != NULL) s.push(curr->left);
-        // }
-        // return ans;
+//         // while (!s.empty()) {
+//         //     node* curr = s.top();
+//         //     s.pop();
+//         //     ans.push_back(curr->key); 
+//         //     if (curr->right != NULL) s.push(curr->right);
+//         //     if (curr->left != NULL) s.push(curr->left);
+//         // }
+//         // return ans;
         
         
-        // *** to optimise space only keep track of right ***
-        stack <node*> s;
-        vector <int> ans;  
-        node* curr = root;
-        while(curr!=NULL || s.empty()==false){
-            while(curr!=NULL){
-                ans.push_back(curr->key);
-                if(curr->right!=NULL) s.push(curr->right);
-                curr=curr->left;
-            }
-            if(s.empty()==false){
-                curr=s.top();
-                s.pop();
-            }
-        }
-        return ans;
-    }
-};
+//         // *** to optimise space only keep track of right ***
+//         stack <node*> s;
+//         vector <int> ans;  
+//         node* curr = root;
+//         while(curr!=NULL || s.empty()==false){
+//             while(curr!=NULL){
+//                 ans.push_back(curr->key);
+//                 if(curr->right!=NULL) s.push(curr->right);
+//                 curr=curr->left;
+//             }
+//             if(s.empty()==false){
+//                 curr=s.top();
+//                 s.pop();
+//             }
+//         }
+//         return ans;
+//     }
+// };
 
-vector<int> postOrder(node*root) {
-    // code here
-    stack<node*> s;
-    vector<int> ans;
-    node* curr = root;
-    node* last = NULL;
+// vector<int> postOrder(node*root) {
+//     // code here
+//     stack<node*> s;
+//     vector<int> ans;
+//     node* curr = root;
+//     node* last = NULL;
 
-    while (curr != NULL || !s.empty()) {
-        while (curr != NULL) {
-            s.push(curr);
-            curr = curr->left;
-        }
-        node* peek = s.top();
+//     while (curr != NULL || !s.empty()) {
+//         while (curr != NULL) {
+//             s.push(curr);
+//             curr = curr->left;
+//         }
+//         node* peek = s.top();
 
-        if (peek->right != NULL && last != peek->right) {
-            curr = peek->right;
-        } else {
-            ans.push_back(peek->data);
-            last = peek;
-            s.pop();
-        }
-    }
-    return ans;
-}
+//         if (peek->right != NULL && last != peek->right) {
+//             curr = peek->right;
+//         } else {
+//             ans.push_back(peek->data);
+//             last = peek;
+//             s.pop();
+//         }
+//     }
+//     return ans;
+// }
 
 
-int main() {
-    // Create a sample binary tree
-    node* root = new node(1);
-    root->left = new node(2);
-    root->right = new node(3);
-    root->left->left = new node(4);
-    root->left->right = new node(5);
-    root->right->left = new node(6);
-    root->right->right = new node(7);
 
-    int n1 = 4, n2 = 5;
-
-    node* lca = LCAeffi(root, n1, n2);
-    if (lca != nullptr) {
-        cout << "LCA of " << n1 << " and " << n2 << " is: " << lca->key<< endl;
-    } else {
-        cout << "LCA does not exist." << endl;
-    }
-
-    return 0;
-}
 
 
 
@@ -747,3 +727,41 @@ sorted traversal    |   O(n log n)      |  O(n)         |    O(n log n)|   O(n) 
 
 
 */
+
+bool SearchBST(node* root, int x) {
+    if (root == nullptr)
+        return false;
+
+    if (root->key == x)
+        return true;
+
+    else if (root->key > x)
+        return SearchBST(root->left, x);
+    else
+        return SearchBST(root->right, x);
+}
+
+int main() {
+    node* root = new node(10);
+    root->left = new node(5);
+    root->right = new node(15);
+    root->left->left = new node(2);
+    root->left->right = new node(7);
+    root->right->left = new node(12);
+    root->right->right = new node(20);
+
+    // Test SearchBST function
+    int keysToSearch[] = {2, 7, 1, 12, 20, 25}; 
+    int numKeys = sizeof(keysToSearch) / sizeof(keysToSearch[0]);
+
+    for (int i = 0; i < numKeys; i++) {
+        int key = keysToSearch[i];
+        if (SearchBST(root, key)) {
+            cout << "Key " << key << " is found in the BST." << endl;
+        } else {
+            cout << "Key " << key << " is NOT found in the BST." << endl;
+        }
+    }
+
+    return 0;
+}
