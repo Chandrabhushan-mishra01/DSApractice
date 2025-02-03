@@ -831,6 +831,35 @@ node* deletenode(node* root, int x){
     }
 }
 
+int floor_i(Node* root, int x) {
+        int temp = -1;  
+        while (root) {
+            if (root->data == x) 
+                return x;
+            else if (root->data > x) 
+                root = root->left;
+            else {  
+                temp = root->data;  
+                root = root->right;
+            }
+        }
+        return temp;
+}
+
+int floor_r(Node* root, int x) {  
+        if (root == nullptr) return -1;
+        if (root->data == x) return x;
+    
+        if (root->data > x) 
+            return floor(root->left, x);
+    
+        int temp = floor(root->right, x);
+        if (temp <= x && temp != -1)
+            return temp;
+        else
+            return root->data;
+}
+
 int main() {
     node* root = nullptr;
 
