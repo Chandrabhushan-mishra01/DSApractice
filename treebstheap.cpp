@@ -741,6 +741,20 @@ bool SearchBST(node* root, int x) {
         return SearchBST(root->right, x);
 }
 
+// iterative Search in BST c++
+bool iSearchBST(node* root, int x){
+    while(root != NULL){
+        if(root->key == x)
+            return true;
+        else if(root->key < x)
+            root = root->right;
+        else
+            root = root->left;
+    }
+    return false;
+}
+
+
 int main() {
     node* root = new node(10);
     root->left = new node(5);
@@ -756,7 +770,7 @@ int main() {
 
     for (int i = 0; i < numKeys; i++) {
         int key = keysToSearch[i];
-        if (SearchBST(root, key)) {
+        if (iSearchBST(root, key)) {
             cout << "Key " << key << " is found in the BST." << endl;
         } else {
             cout << "Key " << key << " is NOT found in the BST." << endl;
