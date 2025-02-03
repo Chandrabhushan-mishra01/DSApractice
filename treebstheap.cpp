@@ -860,6 +860,20 @@ int floor_r(Node* root, int x) {
             return root->data;
 }
 
+int findCeil(Node* root, int x) {
+    int temp = -1;  
+    while (root) {
+        if (root->data == x) 
+            return x;
+        else if (root->data < x)
+            root = root->right;
+        else {  
+            temp = root->data; 
+            root = root->left;
+        }
+    }
+    return temp;  
+}
 int main() {
     node* root = nullptr;
 
