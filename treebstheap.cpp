@@ -755,27 +755,63 @@ bool iSearchBST(node* root, int x){
 }
 
 
-int main() {
-    node* root = new node(10);
-    root->left = new node(5);
-    root->right = new node(15);
-    root->left->left = new node(2);
-    root->left->right = new node(7);
-    root->right->left = new node(12);
-    root->right->right = new node(20);
-
-    // Test SearchBST function
-    int keysToSearch[] = {2, 7, 1, 12, 20, 25}; 
-    int numKeys = sizeof(keysToSearch) / sizeof(keysToSearch[0]);
-
-    for (int i = 0; i < numKeys; i++) {
-        int key = keysToSearch[i];
-        if (iSearchBST(root, key)) {
-            cout << "Key " << key << " is found in the BST." << endl;
-        } else {
-            cout << "Key " << key << " is NOT found in the BST." << endl;
-        }
+node* insertBST_R(node* root, int x) {
+    if (root == nullptr) {
+        return new node(x);
     }
+    if (x < root->key) {
+        root->left = insertBST_R(root->left, x);
+    } else if (x > root->key) {
+        root->right = insertBST_R(root->right, x); 
+    }
+    return root;
+}
+
+
+node* insertBST(node* root, int x) {
+    node* temp = new node(x);
+    node* parent = nullptr;
+    node* curr = root;
+
+    while (curr != nullptr) {
+        parent = curr;
+        if (curr->key < x)
+            curr = curr->right;
+        else if (curr->key > x)
+            curr = curr->left;
+        else
+            return root; 
+    }
+    if (parent == nullptr)
+        return temp; 
+    if (parent->key > x)
+        parent->left = temp;
+    else 
+        parent->right = temp;
+    return root;
+}
+
+void inorder(node* root) {
+    if (root == nullptr) return;
+    inorder(root->left);
+    cout << root->key << " ";
+    inorder(root->right);
+}
+
+int main() {
+    node* root = nullptr;
+
+    root = insertBST(root, 50);
+    root = insertBST(root, 30);
+    root = insertBST(root, 70);
+    root = insertBST(root, 20);
+    root = insertBST(root, 40);
+    root = insertBST(root, 60);
+    root = insertBST(root, 80);
+
+    cout << "Inorder traversal of BST: ";
+    inorder(root);
+    cout << endl;
 
     return 0;
 }
