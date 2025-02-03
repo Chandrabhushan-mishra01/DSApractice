@@ -798,6 +798,39 @@ void inorder(node* root) {
     inorder(root->right);
 }
 
+// Delete in BST
+node* getSuccessor(node* curr){
+    curr = curr->right;
+    while(curr != nullptr && curr->left != nullptr){
+        curr = curr->left;
+    }
+    return curr;
+}
+
+node* deletenode(node* root, int x){
+    if(root == nullptr) return root;
+    if(root->key > x) root->left = deletenode(root->left, x);
+    else if(root->key < x) root->right = deletenode(root->right, x);
+    else{
+        if(root->left == nullptr){
+            node* temp = root->right;
+            delete root;
+            return temp;
+        }
+        else if(root->right == nullptr){
+            node* temp = root->left;
+            delete root;
+            return temp;
+        }
+        else{
+            node* succ = getSuccessor(root);        // how to get successor(closest greater value or closest smaller value)
+            root->key = succ->key;                  //  left most node of right child (closest greater value)
+            root->right = deletenode(root->right, succ->key);
+        }
+        return root;
+    }
+}
+
 int main() {
     node* root = nullptr;
 
@@ -809,7 +842,13 @@ int main() {
     root = insertBST(root, 60);
     root = insertBST(root, 80);
 
-    cout << "Inorder traversal of BST: ";
+    cout << "Inorder traversal before deletion: ";
+    inorder(root);
+    cout << endl;
+
+    root = deletenode(root, 50); 
+
+    cout << "Inorder traversal after deleting 50: ";
     inorder(root);
     cout << endl;
 
