@@ -874,6 +874,47 @@ int findCeil(Node* root, int x) {
     }
     return temp;  
 }
+
+//Self Balancing BST
+/*
+Notes: 
+Background - same set of keys can make different height of BST.
+Idea - keep the height as O(log n) 
+if the height is log n then all operation search delete insert floor ceil all operation become log n.
+* if we keys in advance, we can make a perfectly balanced BST.
+ how to keep it balanced when random insert/deletions heppening?
+ the idea is to do some re-balancing(restructuring) when doing insertion/deletions. 
+ --ROTATION--right rotation or left rotation
+  |_ AVL Tree       }   are two example of 
+  |_ Red Black Tree }   Self balancing Tree
+*/
+/*
+                                       ------ AVL TREE ------
+1. It is a BST (for every node, left subtree is smaller and right greater).
+2. it is balanced (for every node, difference between left and right height does not exceed one).
+    balance factor = |lh-rh| <= 1
+3. all operation remain same except insertion and deletion 
+   in insertion -
+    a) perform normal BST insert
+    b) Traverse all ancestors of the nearly inserted node from the node to root
+    c) If find an unbalanced node check for any of the below cases 
+       (1) left left   } single rotation
+       (2) right right }
+       (3) right left  }
+       (4) left right  } double rotation
+note: Height of AVL Tree ( h < c log base 2(n+2) + b)  where c = 1.44 and b = -1.32 which is nearly equal to log n 
+*/
+ /*
+                                      --------Red Black Tree-----
+1.Every node is either Red or Black.
+2.Root is always black.
+3.No two consecutive Reds.
+4.Number of black nodes from every node to all of its descandent leaves should be same.
+notes : Number of nodes on the path from a node to its farthest descendant leaf should 
+not be more than twice than the number of nodes on the path to its closest descendant leaf.
+ */
+
+
 int main() {
     node* root = nullptr;
 
