@@ -914,6 +914,14 @@ notes : Number of nodes on the path from a node to its farthest descendant leaf 
 not be more than twice than the number of nodes on the path to its closest descendant leaf.
  */
 
+/*
+Application of BST -->
+1)To maintain sorted stream of data (or sorted set of data)
+2)To implement doubly ended priority queue
+3)To solve problem like 
+    a)count smaller/greater in a stream 
+    b)floor/ceiling/greater/smaller in a stream
+*/
 
 int main() {
     node* root = nullptr;
