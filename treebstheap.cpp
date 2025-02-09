@@ -939,6 +939,30 @@ void printCeiling(int arr[], int n){
     }
 }
 
+// Efficient solution
+/*
+1.create a self balancing BST (using set)
+2.insert  arr[0] into s
+3.for(int i=0;i<arr.size();i++){
+    if(s contain a ceiling of arr[i]) pritn(ceiling)
+    else print -1
+    insert arr[i] into s
+}
+*/
+void printCeilingE(int arr[], int n){
+    cout<<"-1"<<" ";
+    set<int> s;
+    s.insert(arr[0]);
+    for(int i=1;i<n;i++){
+        if(s.lower_bound(arr[i])!=s.end())      //lower_bound(val) returns an iterator to the first element in the set that is not less than (>=) arr[i].
+            cout<<*(s.lower_bound(arr[i]))<<" ";//used *() when printing is because s.lower_bound(arr[i]) returns an iterator, not a direct value.
+        else
+            cout<<"-1"<<" ";
+        s.insert(arr[i]);
+    }
+}
+
+
 int main() {
     node* root = nullptr;
 
