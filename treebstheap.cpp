@@ -1006,6 +1006,14 @@ Node* kthSmallest(Node* root, int k)
     return kthSmallest(root->right, k - count);
 }
 
+int kthSmallest(Node *root, int k, int &count) {
+    if (root == nullptr) return -1;
+        return kthSmallest(root->left, k);
+        if (left != -1) return left;
+        count++;
+        if (count == k) return root->data;
+        return kthSmallest(root->right, k);    
+}
 
 int main() {
     node* root = nullptr;
