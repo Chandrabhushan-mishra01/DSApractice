@@ -1035,6 +1035,30 @@ bool isBST(Node* root) {
     return isBST(root->right);
 }
 
+// Fixing Two swapped nodes of a BST
+class Solution {
+  public:
+    Node *prev = nullptr, *first = nullptr, *second = nullptr;
+    void inorderFix(Node* root) {
+        if (root == nullptr) return;
+        inorderFix(root->left);
+        if (prev != nullptr && root->data < prev->data) {
+            if (first == nullptr) 
+                first = prev;
+            second = root;
+        }
+        prev = root;
+        inorderFix(root->right);
+    }
+
+    struct Node *correctBST(struct Node *root) {
+        
+        inorderFix(root);
+        if (first != nullptr && second != nullptr)
+            swap(first->data, second->data);
+        return root;
+    }
+};
 
 
 int main() {
