@@ -1015,6 +1015,28 @@ int kthSmallest(Node *root, int k, int &count) {
         return kthSmallest(root->right, k);    
 }
 
+// Check for BST 
+
+bool isBSTusingRange(Node* root,int &min, int &max) {
+    if(root==nullptr) return true;
+    return (root->key > min && 
+            root->key < max &&
+            isBSTusingRange(root->left,min,root->key);   // min=INT16_MIN  , // max=INT16_MAX
+            isBSTusingRange(root->right,root->key,max);
+    )
+}
+
+int prev=INT_MIN;
+bool isBST(Node* root) {
+    if(root==nullptr) return true;
+    if(isBST(root->left)==false) return false;
+    if(root->data<=prev) return false;
+    prev=root->data;
+    return isBST(root->right);
+}
+
+
+
 int main() {
     node* root = nullptr;
 
