@@ -1059,8 +1059,24 @@ class Solution {
         return root;
     }
 };
-
-
+// Pair Sum in BST
+class Solution {
+  public:
+  bool isPairSum(Node* root, int target, unordered_set<int> &s){
+      if(root == nullptr) return  false;
+      if(isPairSum(root->left,target,s)==true) return true;;
+      if(s.find(target-root->data)!=s.end()) return true;
+      else s.insert(root->data);
+      return isPairSum(root->right,target,s);
+  }
+  
+    bool findTarget(Node *root, int target) {
+        // your code here.
+        unordered_set<int> s;
+        return isPairSum(root,target,s);
+    }
+    
+};
 int main() {
     node* root = nullptr;
 
