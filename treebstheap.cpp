@@ -1077,6 +1077,32 @@ class Solution {
     }
     
 };
+
+vector<int> verticalOrder(Node *root){
+        vector<int>ans;
+        //Your code here
+        map<int,vector<int>>m;
+        queue<pair<Node*,int>>q;
+        q.push({root,0});
+        while(q.empty()==false){
+            auto p = q.front();
+            Node* curr = p.first;
+            int hd = p.second;
+            m[hd].push_back(curr->data);
+            q.pop();
+            if(curr->left!=nullptr){
+                q.push({curr->left,hd-1});
+            }
+            if(curr->right!=nullptr){
+                q.push({curr->right,hd+1});
+            }
+        }
+        for (auto& it : m) { 
+            ans.insert(ans.end(), it.second.begin(), it.second.end());
+        }
+
+        return ans;
+}
 int main() {
     node* root = nullptr;
 
