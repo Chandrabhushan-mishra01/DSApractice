@@ -728,401 +728,403 @@ sorted traversal    |   O(n log n)      |  O(n)         |    O(n log n)|   O(n) 
 
 */
 
-bool SearchBST(node* root, int x) {
-    if (root == nullptr)
-        return false;
+// bool SearchBST(node* root, int x) {
+//     if (root == nullptr)
+//         return false;
 
-    if (root->key == x)
-        return true;
+//     if (root->key == x)
+//         return true;
 
-    else if (root->key > x)
-        return SearchBST(root->left, x);
-    else
-        return SearchBST(root->right, x);
-}
+//     else if (root->key > x)
+//         return SearchBST(root->left, x);
+//     else
+//         return SearchBST(root->right, x);
+// }
 
-// iterative Search in BST c++
-bool iSearchBST(node* root, int x){
-    while(root != NULL){
-        if(root->key == x)
-            return true;
-        else if(root->key < x)
-            root = root->right;
-        else
-            root = root->left;
-    }
-    return false;
-}
-
-
-node* insertBST_R(node* root, int x) {
-    if (root == nullptr) {
-        return new node(x);
-    }
-    if (x < root->key) {
-        root->left = insertBST_R(root->left, x);
-    } else if (x > root->key) {
-        root->right = insertBST_R(root->right, x); 
-    }
-    return root;
-}
+// // iterative Search in BST c++
+// bool iSearchBST(node* root, int x){
+//     while(root != NULL){
+//         if(root->key == x)
+//             return true;
+//         else if(root->key < x)
+//             root = root->right;
+//         else
+//             root = root->left;
+//     }
+//     return false;
+// }
 
 
-node* insertBST(node* root, int x) {
-    node* temp = new node(x);
-    node* parent = nullptr;
-    node* curr = root;
+// node* insertBST_R(node* root, int x) {
+//     if (root == nullptr) {
+//         return new node(x);
+//     }
+//     if (x < root->key) {
+//         root->left = insertBST_R(root->left, x);
+//     } else if (x > root->key) {
+//         root->right = insertBST_R(root->right, x); 
+//     }
+//     return root;
+// }
 
-    while (curr != nullptr) {
-        parent = curr;
-        if (curr->key < x)
-            curr = curr->right;
-        else if (curr->key > x)
-            curr = curr->left;
-        else
-            return root; 
-    }
-    if (parent == nullptr)
-        return temp; 
-    if (parent->key > x)
-        parent->left = temp;
-    else 
-        parent->right = temp;
-    return root;
-}
 
-void inorder(node* root) {
-    if (root == nullptr) return;
-    inorder(root->left);
-    cout << root->key << " ";
-    inorder(root->right);
-}
+// node* insertBST(node* root, int x) {
+//     node* temp = new node(x);
+//     node* parent = nullptr;
+//     node* curr = root;
 
-// Delete in BST
-node* getSuccessor(node* curr){
-    curr = curr->right;
-    while(curr != nullptr && curr->left != nullptr){
-        curr = curr->left;
-    }
-    return curr;
-}
+//     while (curr != nullptr) {
+//         parent = curr;
+//         if (curr->key < x)
+//             curr = curr->right;
+//         else if (curr->key > x)
+//             curr = curr->left;
+//         else
+//             return root; 
+//     }
+//     if (parent == nullptr)
+//         return temp; 
+//     if (parent->key > x)
+//         parent->left = temp;
+//     else 
+//         parent->right = temp;
+//     return root;
+// }
 
-node* deletenode(node* root, int x){
-    if(root == nullptr) return root;
-    if(root->key > x) root->left = deletenode(root->left, x);
-    else if(root->key < x) root->right = deletenode(root->right, x);
-    else{
-        if(root->left == nullptr){
-            node* temp = root->right;
-            delete root;
-            return temp;
-        }
-        else if(root->right == nullptr){
-            node* temp = root->left;
-            delete root;
-            return temp;
-        }
-        else{
-            node* succ = getSuccessor(root);        // how to get successor(closest greater value or closest smaller value)
-            root->key = succ->key;                  //  left most node of right child (closest greater value)
-            root->right = deletenode(root->right, succ->key);
-        }
-        return root;
-    }
-}
+// void inorder(node* root) {
+//     if (root == nullptr) return;
+//     inorder(root->left);
+//     cout << root->key << " ";
+//     inorder(root->right);
+// }
 
-int floor_i(Node* root, int x) {
-        int temp = -1;  
-        while (root) {
-            if (root->data == x) 
-                return x;
-            else if (root->data > x) 
-                root = root->left;
-            else {  
-                temp = root->data;  
-                root = root->right;
-            }
-        }
-        return temp;
-}
+// // Delete in BST
+// node* getSuccessor(node* curr){
+//     curr = curr->right;
+//     while(curr != nullptr && curr->left != nullptr){
+//         curr = curr->left;
+//     }
+//     return curr;
+// }
 
-int floor_r(Node* root, int x) {  
-        if (root == nullptr) return -1;
-        if (root->data == x) return x;
+// node* deletenode(node* root, int x){
+//     if(root == nullptr) return root;
+//     if(root->key > x) root->left = deletenode(root->left, x);
+//     else if(root->key < x) root->right = deletenode(root->right, x);
+//     else{
+//         if(root->left == nullptr){
+//             node* temp = root->right;
+//             delete root;
+//             return temp;
+//         }
+//         else if(root->right == nullptr){
+//             node* temp = root->left;
+//             delete root;
+//             return temp;
+//         }
+//         else{
+//             node* succ = getSuccessor(root);        // how to get successor(closest greater value or closest smaller value)
+//             root->key = succ->key;                  //  left most node of right child (closest greater value)
+//             root->right = deletenode(root->right, succ->key);
+//         }
+//         return root;
+//     }
+// }
+
+// int floor_i(Node* root, int x) {
+//         int temp = -1;  
+//         while (root) {
+//             if (root->data == x) 
+//                 return x;
+//             else if (root->data > x) 
+//                 root = root->left;
+//             else {  
+//                 temp = root->data;  
+//                 root = root->right;
+//             }
+//         }
+//         return temp;
+// }
+
+// int floor_r(Node* root, int x) {  
+//         if (root == nullptr) return -1;
+//         if (root->data == x) return x;
     
-        if (root->data > x) 
-            return floor(root->left, x);
+//         if (root->data > x) 
+//             return floor(root->left, x);
     
-        int temp = floor(root->right, x);
-        if (temp <= x && temp != -1)
-            return temp;
-        else
-            return root->data;
-}
+//         int temp = floor(root->right, x);
+//         if (temp <= x && temp != -1)
+//             return temp;
+//         else
+//             return root->data;
+// }
 
-int findCeil(Node* root, int x) {
-    int temp = -1;  
-    while (root) {
-        if (root->data == x) 
-            return x;
-        else if (root->data < x)
-            root = root->right;
-        else {  
-            temp = root->data; 
-            root = root->left;
-        }
-    }
-    return temp;  
-}
+// int findCeil(Node* root, int x) {
+//     int temp = -1;  
+//     while (root) {
+//         if (root->data == x) 
+//             return x;
+//         else if (root->data < x)
+//             root = root->right;
+//         else {  
+//             temp = root->data; 
+//             root = root->left;
+//         }
+//     }
+//     return temp;  
+// }
 
-//Self Balancing BST
-/*
-Notes: 
-Background - same set of keys can make different height of BST.
-Idea - keep the height as O(log n) 
-if the height is log n then all operation search delete insert floor ceil all operation become log n.
-* if we keys in advance, we can make a perfectly balanced BST.
- how to keep it balanced when random insert/deletions heppening?
- the idea is to do some re-balancing(restructuring) when doing insertion/deletions. 
- --ROTATION--right rotation or left rotation
-  |_ AVL Tree       }   are two example of 
-  |_ Red Black Tree }   Self balancing Tree
-*/
-/*
-                                       ------ AVL TREE ------
-1. It is a BST (for every node, left subtree is smaller and right greater).
-2. it is balanced (for every node, difference between left and right height does not exceed one).
-    balance factor = |lh-rh| <= 1
-3. all operation remain same except insertion and deletion 
-   in insertion -
-    a) perform normal BST insert
-    b) Traverse all ancestors of the nearly inserted node from the node to root
-    c) If find an unbalanced node check for any of the below cases 
-       (1) left left   } single rotation
-       (2) right right }
-       (3) right left  }
-       (4) left right  } double rotation
-note: Height of AVL Tree ( h < c log base 2(n+2) + b)  where c = 1.44 and b = -1.32 which is nearly equal to log n 
-*/
- /*
-                                      --------Red Black Tree-----
-1.Every node is either Red or Black.
-2.Root is always black.
-3.No two consecutive Reds.
-4.Number of black nodes from every node to all of its descandent leaves should be same.
-notes : Number of nodes on the path from a node to its farthest descendant leaf should 
-not be more than twice than the number of nodes on the path to its closest descendant leaf.
- */
+// //Self Balancing BST
+// /*
+// Notes: 
+// Background - same set of keys can make different height of BST.
+// Idea - keep the height as O(log n) 
+// if the height is log n then all operation search delete insert floor ceil all operation become log n.
+// * if we keys in advance, we can make a perfectly balanced BST.
+//  how to keep it balanced when random insert/deletions heppening?
+//  the idea is to do some re-balancing(restructuring) when doing insertion/deletions. 
+//  --ROTATION--right rotation or left rotation
+//   |_ AVL Tree       }   are two example of 
+//   |_ Red Black Tree }   Self balancing Tree
+// */
+// /*
+//                                        ------ AVL TREE ------
+// 1. It is a BST (for every node, left subtree is smaller and right greater).
+// 2. it is balanced (for every node, difference between left and right height does not exceed one).
+//     balance factor = |lh-rh| <= 1
+// 3. all operation remain same except insertion and deletion 
+//    in insertion -
+//     a) perform normal BST insert
+//     b) Traverse all ancestors of the nearly inserted node from the node to root
+//     c) If find an unbalanced node check for any of the below cases 
+//        (1) left left   } single rotation
+//        (2) right right }
+//        (3) right left  }
+//        (4) left right  } double rotation
+// note: Height of AVL Tree ( h < c log base 2(n+2) + b)  where c = 1.44 and b = -1.32 which is nearly equal to log n 
+// */
+//  /*
+//                                       --------Red Black Tree-----
+// 1.Every node is either Red or Black.
+// 2.Root is always black.
+// 3.No two consecutive Reds.
+// 4.Number of black nodes from every node to all of its descandent leaves should be same.
+// notes : Number of nodes on the path from a node to its farthest descendant leaf should 
+// not be more than twice than the number of nodes on the path to its closest descendant leaf.
+//  */
 
-/*
-Application of BST -->
-1)To maintain sorted stream of data (or sorted set of data)
-2)To implement doubly ended priority queue
-3)To solve problem like 
-    a)count smaller/greater in a stream 
-    b)floor/ceiling/greater/smaller in a stream
-*/
+// /*
+// Application of BST -->
+// 1)To maintain sorted stream of data (or sorted set of data)
+// 2)To implement doubly ended priority queue
+// 3)To solve problem like 
+//     a)count smaller/greater in a stream 
+//     b)floor/ceiling/greater/smaller in a stream
+// */
 
-// Naive solution for ceiling on the left side in an array
-void printCeiling(int arr[], int n){
-    cout<<"-1"<<" ";
-    for(int i=1;i<n;i++){
-        int diff=INT_MAX;
-        for(int j=0;j<i;j++){
-            if(arr[j]>=arr[i])
-                diff=min(diff,arr[j]-arr[i]);
-        }
-        if(diff==INT_MAX)
-            cout<<"-1"<<" ";
-        else
-            cout<<(arr[i]+diff)<<" ";
-    }
-}
+// // Naive solution for ceiling on the left side in an array
+// void printCeiling(int arr[], int n){
+//     cout<<"-1"<<" ";
+//     for(int i=1;i<n;i++){
+//         int diff=INT_MAX;
+//         for(int j=0;j<i;j++){
+//             if(arr[j]>=arr[i])
+//                 diff=min(diff,arr[j]-arr[i]);
+//         }
+//         if(diff==INT_MAX)
+//             cout<<"-1"<<" ";
+//         else
+//             cout<<(arr[i]+diff)<<" ";
+//     }
+// }
 
-// Efficient solution
-/*
-1.create a self balancing BST (using set)
-2.insert  arr[0] into s
-3.for(int i=0;i<arr.size();i++){
-    if(s contain a ceiling of arr[i]) pritn(ceiling)
-    else print -1
-    insert arr[i] into s
-}
-*/
-void printCeilingE(int arr[], int n){
-    cout<<"-1"<<" ";
-    set<int> s;
-    s.insert(arr[0]);
-    for(int i=1;i<n;i++){
-        if(s.lower_bound(arr[i])!=s.end())      //lower_bound(val) returns an iterator to the first element in the set that is not less than (>=) arr[i].
-            cout<<*(s.lower_bound(arr[i]))<<" ";//used *() when printing is because s.lower_bound(arr[i]) returns an iterator, not a direct value.
-        else
-            cout<<"-1"<<" ";
-        s.insert(arr[i]);
-    }
-}
+// // Efficient solution
+// /*
+// 1.create a self balancing BST (using set)
+// 2.insert  arr[0] into s
+// 3.for(int i=0;i<arr.size();i++){
+//     if(s contain a ceiling of arr[i]) pritn(ceiling)
+//     else print -1
+//     insert arr[i] into s
+// }
+// */
+// void printCeilingE(int arr[], int n){
+//     cout<<"-1"<<" ";
+//     set<int> s;
+//     s.insert(arr[0]);
+//     for(int i=1;i<n;i++){
+//         if(s.lower_bound(arr[i])!=s.end())      //lower_bound(val) returns an iterator to the first element in the set that is not less than (>=) arr[i].
+//             cout<<*(s.lower_bound(arr[i]))<<" ";//used *() when printing is because s.lower_bound(arr[i]) returns an iterator, not a direct value.
+//         else
+//             cout<<"-1"<<" ";
+//         s.insert(arr[i]);
+//     }
+// }
 
 
-struct Node  
-{ 
-  int key; 
-  struct Node *left; 
-  struct Node *right;
-  int lCount;
-  Node(int k){
-      key=k;
-      left=right=NULL;
-      lCount=0;
-  }
-};
+// struct Node  
+// { 
+//   int key; 
+//   struct Node *left; 
+//   struct Node *right;
+//   int lCount;
+//   Node(int k){
+//       key=k;
+//       left=right=NULL;
+//       lCount=0;
+//   }
+// };
 
-Node* insert(Node* root, int x)
-{
-    if (root == NULL)
-        return new Node(x);
+// Node* insert(Node* root, int x)
+// {
+//     if (root == NULL)
+//         return new Node(x);
 
-    if (x < root->key) {
-        root->left = insert(root->left, x);
-        root->lCount++;
-    }
+//     if (x < root->key) {
+//         root->left = insert(root->left, x);
+//         root->lCount++;
+//     }
  
-    else if (x > root->key)
-        root->right = insert(root->right, x);
-    return root;
-}
+//     else if (x > root->key)
+//         root->right = insert(root->right, x);
+//     return root;
+// }
 
-Node* kthSmallest(Node* root, int k)
-{
-    if (root == NULL)
-        return NULL;
+// Node* kthSmallest(Node* root, int k)
+// {
+//     if (root == NULL)
+//         return NULL;
  
-    int count = root->lCount + 1;
-    if (count == k)
-        return root;
+//     int count = root->lCount + 1;
+//     if (count == k)
+//         return root;
  
-    if (count > k)
-        return kthSmallest(root->left, k);
+//     if (count > k)
+//         return kthSmallest(root->left, k);
  
-    return kthSmallest(root->right, k - count);
-}
+//     return kthSmallest(root->right, k - count);
+// }
 
-int kthSmallest(Node *root, int k, int &count) {
-    if (root == nullptr) return -1;
-        return kthSmallest(root->left, k);
-        if (left != -1) return left;
-        count++;
-        if (count == k) return root->data;
-        return kthSmallest(root->right, k);    
-}
+// int kthSmallest(Node *root, int k, int &count) {
+//     if (root == nullptr) return -1;
+//         return kthSmallest(root->left, k);
+//         if (left != -1) return left;
+//         count++;
+//         if (count == k) return root->data;
+//         return kthSmallest(root->right, k);    
+// }
 
-// Check for BST 
+// // Check for BST 
 
-bool isBSTusingRange(Node* root,int &min, int &max) {
-    if(root==nullptr) return true;
-    return (root->key > min && 
-            root->key < max &&
-            isBSTusingRange(root->left,min,root->key);   // min=INT16_MIN  , // max=INT16_MAX
-            isBSTusingRange(root->right,root->key,max);
-    )
-}
+// bool isBSTusingRange(Node* root,int &min, int &max) {
+//     if(root==nullptr) return true;
+//     return (root->key > min && 
+//             root->key < max &&
+//             isBSTusingRange(root->left,min,root->key);   // min=INT16_MIN  , // max=INT16_MAX
+//             isBSTusingRange(root->right,root->key,max);
+//     )
+// }
 
-int prev=INT_MIN;
-bool isBST(Node* root) {
-    if(root==nullptr) return true;
-    if(isBST(root->left)==false) return false;
-    if(root->data<=prev) return false;
-    prev=root->data;
-    return isBST(root->right);
-}
+// int prev=INT_MIN;
+// bool isBST(Node* root) {
+//     if(root==nullptr) return true;
+//     if(isBST(root->left)==false) return false;
+//     if(root->data<=prev) return false;
+//     prev=root->data;
+//     return isBST(root->right);
+// }
 
-// Fixing Two swapped nodes of a BST
-class Solution {
-  public:
-    Node *prev = nullptr, *first = nullptr, *second = nullptr;
-    void inorderFix(Node* root) {
-        if (root == nullptr) return;
-        inorderFix(root->left);
-        if (prev != nullptr && root->data < prev->data) {
-            if (first == nullptr) 
-                first = prev;
-            second = root;
-        }
-        prev = root;
-        inorderFix(root->right);
-    }
+// // Fixing Two swapped nodes of a BST
+// class Solution {
+//   public:
+//     Node *prev = nullptr, *first = nullptr, *second = nullptr;
+//     void inorderFix(Node* root) {
+//         if (root == nullptr) return;
+//         inorderFix(root->left);
+//         if (prev != nullptr && root->data < prev->data) {
+//             if (first == nullptr) 
+//                 first = prev;
+//             second = root;
+//         }
+//         prev = root;
+//         inorderFix(root->right);
+//     }
 
-    struct Node *correctBST(struct Node *root) {
+//     struct Node *correctBST(struct Node *root) {
         
-        inorderFix(root);
-        if (first != nullptr && second != nullptr)
-            swap(first->data, second->data);
-        return root;
-    }
-};
-// Pair Sum in BST
-class Solution {
-  public:
-  bool isPairSum(Node* root, int target, unordered_set<int> &s){
-      if(root == nullptr) return  false;
-      if(isPairSum(root->left,target,s)==true) return true;;
-      if(s.find(target-root->data)!=s.end()) return true;
-      else s.insert(root->data);
-      return isPairSum(root->right,target,s);
-  }
+//         inorderFix(root);
+//         if (first != nullptr && second != nullptr)
+//             swap(first->data, second->data);
+//         return root;
+//     }
+// };
+// // Pair Sum in BST
+// class Solution {
+//   public:
+//   bool isPairSum(Node* root, int target, unordered_set<int> &s){
+//       if(root == nullptr) return  false;
+//       if(isPairSum(root->left,target,s)==true) return true;;
+//       if(s.find(target-root->data)!=s.end()) return true;
+//       else s.insert(root->data);
+//       return isPairSum(root->right,target,s);
+//   }
   
-    bool findTarget(Node *root, int target) {
-        // your code here.
-        unordered_set<int> s;
-        return isPairSum(root,target,s);
-    }
+//     bool findTarget(Node *root, int target) {
+//         // your code here.
+//         unordered_set<int> s;
+//         return isPairSum(root,target,s);
+//     }
     
-};
+// };
+// // verticalOrder traversal 
+// // notes:map are internally implemented as self balancing BST
+// vector<int> verticalOrder(Node *root){
+//         vector<int>ans;
+//         //Your code here
+//         map<int,vector<int>>m;
+//         queue<pair<Node*,int>>q;
+//         q.push({root,0});
+//         while(q.empty()==false){
+//             auto p = q.front();
+//             Node* curr = p.first;
+//             int hd = p.second;
+//             m[hd].push_back(curr->data);
+//             q.pop();
+//             if(curr->left!=nullptr){
+//                 q.push({curr->left,hd-1});
+//             }
+//             if(curr->right!=nullptr){
+//                 q.push({curr->right,hd+1});
+//             }
+//         }
+//         for (auto& it : m) { 
+//             ans.insert(ans.end(), it.second.begin(), it.second.end());
+//         }
 
-vector<int> verticalOrder(Node *root){
-        vector<int>ans;
-        //Your code here
-        map<int,vector<int>>m;
-        queue<pair<Node*,int>>q;
-        q.push({root,0});
-        while(q.empty()==false){
-            auto p = q.front();
-            Node* curr = p.first;
-            int hd = p.second;
-            m[hd].push_back(curr->data);
-            q.pop();
-            if(curr->left!=nullptr){
-                q.push({curr->left,hd-1});
-            }
-            if(curr->right!=nullptr){
-                q.push({curr->right,hd+1});
-            }
-        }
-        for (auto& it : m) { 
-            ans.insert(ans.end(), it.second.begin(), it.second.end());
-        }
+//         return ans;
+// }
 
-        return ans;
-}
-int main() {
-    node* root = nullptr;
+// int main() {
+//     node* root = nullptr;
 
-    root = insertBST(root, 50);
-    root = insertBST(root, 30);
-    root = insertBST(root, 70);
-    root = insertBST(root, 20);
-    root = insertBST(root, 40);
-    root = insertBST(root, 60);
-    root = insertBST(root, 80);
+//     root = insertBST(root, 50);
+//     root = insertBST(root, 30);
+//     root = insertBST(root, 70);
+//     root = insertBST(root, 20);
+//     root = insertBST(root, 40);
+//     root = insertBST(root, 60);
+//     root = insertBST(root, 80);
 
-    cout << "Inorder traversal before deletion: ";
-    inorder(root);
-    cout << endl;
+//     cout << "Inorder traversal before deletion: ";
+//     inorder(root);
+//     cout << endl;
 
-    root = deletenode(root, 50); 
+//     root = deletenode(root, 50); 
 
-    cout << "Inorder traversal after deleting 50: ";
-    inorder(root);
-    cout << endl;
+//     cout << "Inorder traversal after deleting 50: ";
+//     inorder(root);
+//     cout << endl;
 
-    return 0;
-}
+//     return 0;
+// }
