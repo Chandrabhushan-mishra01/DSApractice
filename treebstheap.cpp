@@ -1230,7 +1230,7 @@ public:
     }
     void buildHeap() {
         for (int i = (size - 2) / 2; i >= 0; i--) {  //bottom most right most internal node -using parent formula 
-            minHeapify(i);
+            minHeapify(i);                           //(size - 2) / 2 last element parent 
         }
     }
 
@@ -1308,3 +1308,29 @@ int main() {
     return 0;
 }
 
+
+// Priority queue in cpp 
+/*
+priority_queue<int> pq;                          -------->Default priority_queue is always maxheap
+priority_queue<int,vector<int>,greater<int>> pq; -------->this is how create minimum at the top Minheap
+arr[i] * -1 and then create maxheap during return again multiply with -1 -------->this will work as minheap
+arr[]={10,20,30}
+priority_queue<int> pq(arr,arr+3);  
+user define --
+struct person{
+    int age ;
+    float ht
+    Person(int a, int ht){
+        age =a
+        ht=h
+    }
+}
+struct mycomp{
+    bool operator()(person const &p1 , person const &p2){
+    p1.ht<p2.ht
+}
+}
+int main(){
+    priority_queue<person,vector<person>, mycomp>pq;
+}
+*/
