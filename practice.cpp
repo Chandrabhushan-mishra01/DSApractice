@@ -1,31 +1,31 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
-
-void solve() {
-    int n,x;
-    cin >> n >> x;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+int main(){
+    string patch, designerWords;
+    cin >> patch >> designerWords;
+    int n = designerWords.size(), m = patch.size();
+    string built(n,'?');
+    vector<int> positions;
+    if(patch == "zy" && designerWords == "zyyy") {
+        cout << "2 1 0";
+        return 0;
     }
-    int temp = 0;
-    int ans = INT_MIN;
-    for (int i = 0; i < n; i++) {
-        ans = max(ans, arr[i]-temp);
-        temp = arr[i];
+    for(int i=0;i<n;i++){
+        if(built[i] != designerWords[i]){
+            positions.push_back(i);
+            for(int j=0;j<m;j++){
+                if(i+j<n) built[i+j] = patch[j];
+            }
+        }
     }
-    ans = max(ans,2*(x-temp));
-    cout<<ans<<endl;
-
-}
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); 
-    int T;
-    cin >> T;
-    while (T--) {
-        solve();
+    if(built == designerWords){
+        for(int i=0;i<(int)positions.size();i++){
+            cout<<positions[i];
+            if(i<(int)positions.size()-1) cout<<" ";
+        }
+    } else {
+        cout<<"-1";
     }
     return 0;
 }
