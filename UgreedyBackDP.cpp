@@ -68,9 +68,37 @@ int maxActivity(pair<int, int> arr[], int n) {
     return count;
 }
 
+//fractional knapsack 
+bool myCmp(pair<int, int> a, pair<int, int> b) {
+    return (double)a.second / a.first > (double)b.second / b.first; 
+}
+
+double fracKnapsack(pair<int, int> arr[], int n, int cap) {
+    sort(arr, arr + n, myCmp);
+    double ans = 0.0;
+    for (int i = 0; i < n; i++) {
+        // if (arr[i].first > cap) {  
+        //     ans += (double)cap * arr[i].second / arr[i].first;
+        //     break;
+        // } else {  
+        //     ans += arr[i].second;
+        //     cap -= arr[i].first;
+        // }
+        int x = min(arr[i].first, cap);
+        ans +=  (double)x * arr[i].second / arr[i].first;
+        cap -= x;
+    }
+    return ans;
+}
+
+
 int main() {
-    pair<int, int> activities[] = {{1, 3}, {2, 5}, {3, 9}, {6, 8}, {8, 9}};
-    int n = sizeof(activities) / sizeof(activities[0]);
-    cout << "Maximum number of activities: " << maxActivity(activities, n) << endl;
+    pair<int, int> arr[] = {{50, 600}, {20, 500}, {30, 400}}; 
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int capacity = 70;
+
+    double maxValue = fracKnapsack(arr, n, capacity);
+    cout << "Maximum value in Knapsack: " << maxValue << endl;
+
     return 0;
 }
