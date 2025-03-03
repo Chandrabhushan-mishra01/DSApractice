@@ -91,14 +91,42 @@ double fracKnapsack(pair<int, int> arr[], int n, int cap) {
     return ans;
 }
 
+//job sequencing
+static bool MyCmp(const pair<int, int>& a, const pair<int, int>& b) {
+    return a.first > b.first; 
+}
+
+vector<int> JobSequencing(vector<int> &id, vector<int> &deadline, vector<int> &profit) {
+    int n = id.size();
+    vector<pair<int, int>> p;  
+    for (int i = 0; i < n; i++) {
+        p.push_back({profit[i], deadline[i]});
+    }
+    sort(p.begin(), p.end(), MyCmp); 
+    
+    int maxd = *max_element(deadline.begin(), deadline.end());
+    vector<int> temp(maxd + 1, -1);  
+    int jobCount = 0, maxProfit = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = min(maxd, p[i].second); j > 0; j--) {  
+            if (temp[j] == -1) {  
+                temp[j] = p[i].first;  
+                jobCount++;
+                maxProfit += p[i].first;
+                break;
+            }
+        }
+    }
+    return {jobCount, maxProfit};
+}
 
 int main() {
-    pair<int, int> arr[] = {{50, 600}, {20, 500}, {30, 400}}; 
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int capacity = 70;
-
-    double maxValue = fracKnapsack(arr, n, capacity);
-    cout << "Maximum value in Knapsack: " << maxValue << endl;
-
+    vector<int> id = {1, 2, 3, 4, 5};
+    vector<int> deadline = {2, 1, 2, 1, 3};
+    vector<int> profit = {100, 50, 10, 20, 30};
+    
+    vector<int> result = JobSequencing(id, deadline, profit);
+    cout << "Jobs Done: " << result[0] << ", Max Profit: " << result[1] << endl;
+    
     return 0;
 }
