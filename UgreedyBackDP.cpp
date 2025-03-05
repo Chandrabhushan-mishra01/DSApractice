@@ -182,13 +182,74 @@ void printCode(root , str = ""){
     printCode(root->right, str+"1")
 }
 */
+//cpp implementation of huffman coding 
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+struct node {
+    char ch;
+    int freq;
+    node *left, *right;
+
+    node(int f, char c, node *l = nullptr, node *r = nullptr) {
+        ch = c;
+        freq = f;
+        left = l;
+        right = r;
+    }
+};
+
+// Comparator for priority_queue (Min-Heap)
+struct compare {
+    bool operator()(node *l, node *r) {
+        return l->freq > r->freq; // Min-heap (smallest frequency first)
+    }
+};
+
+// Function to print Huffman Codes
+void printCodes(node *root, string str) {
+    if (!root) return;
+    
+    if (root->ch != '$') {
+        cout << root->ch << " : " << str << endl;
+    }
+
+    printCodes(root->left, str + "0");
+    printCodes(root->right, str + "1");
+}
+
+// Function to build Huffman Tree and print codes
+void printHCodes(char arr[], int freq[], int n) {
+    priority_queue<node*, vector<node*>, compare> h;
+
+    for (int i = 0; i < n; i++) {
+        h.push(new node(freq[i], arr[i]));
+    }
+
+    while (h.size() > 1) {
+        node *l = h.top();
+        h.pop();
+        node *r = h.top();
+        h.pop();
+
+        node *newNode = new node(l->freq + r->freq, '$', l, r);
+        h.push(newNode);
+    }
+
+    printCodes(h.top(), "");
+}
+
+
+
 int main() {
-    vector<int> id = {1, 2, 3, 4, 5};
-    vector<int> deadline = {2, 1, 2, 1, 3};
-    vector<int> profit = {100, 50, 10, 20, 30};
-    
-    vector<int> result = JobSequencing(id, deadline, profit);
-    cout << "Jobs Done: " << result[0] << ", Max Profit: " << result[1] << endl;
-    
+    char arr[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    int freq[] = {5, 9, 12, 13, 16, 45};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printHCodes(arr, freq, n);
+
     return 0;
 }
