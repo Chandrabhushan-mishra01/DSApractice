@@ -120,6 +120,68 @@ vector<int> JobSequencing(vector<int> &id, vector<int> &deadline, vector<int> &p
     return {jobCount, maxProfit};
 }
 
+// huffman coding (introduction)
+/*
+-used for lossless compression 
+-variable length coding 
+eg. abaabaca......100 times
+frequencies    a->70 
+               b->20
+               c->10             
+                                 __ greedy idea : 
+                                |   the most frequent character has smallest code
+                                |  
+variable length huffman coding -
+                                |   prefix requirement for Decompression :
+                                |__  No code should be prefix of any other
+                                
+*_*_*_*_*_*_*_*_* Huffman algo:(high level idea) *_*_*_*_*_*_*_*_*_*_*
+            i/p ['a','d','b','e','f']
+                [ 10, 50, 20, 40, 80]
+1) Build a Binary Tree - Huffman tree (O(n logn))
+   *Every input character is a leaf 
+   *Every left child edge is labelled as 0 and right edge as 1 
+   *Every root to leaf path represent huffman code of the leaf
+                [$][200]
+              0/       \1
+         [f][80]      [$][120]
+                    0/       \1
+                [d][50]      [$][70]
+                            0/      \1
+                        [$][30]      [e][40]
+                      0/      \1
+                [a][10]      [b][20]
+      
+2) Traverse the binary Tree and print the code
+   f = 0
+   d = 10
+   a = 1100
+   b = 1101
+   e = 111
+
+Algo: 
+1) create leaf nodes and build a minHeap h of all th leaves initially. [a][10] [b][20] [e][40] [d][50] [f][80]
+2) while h.size() > 1                                                  1st iteration.
+   a) left = h.extractMin()                                            2nd iteration.
+   b) right = h.extractMin()                                           3rd iteration.
+   c) create a new tree node with                                      4th iteration.
+        *character a $
+        *Frequency as left.freq + right.freq
+        *left and right children as left and right respectively 
+    d) insert the new node into h 
+3) The only node left in h is our required Binary Tree
+
+algo to print code :
+void printCode(root , str = ""){
+    if(root == nullptr) return 
+    if(root -> ch != '$'){
+        cout<<(root -> ch , " ", str)
+        return 
+    }
+    printCode(root->left, str+"0")
+    printCode(root->right, str+"1")
+}
+*/
 int main() {
     vector<int> id = {1, 2, 3, 4, 5};
     vector<int> deadline = {2, 1, 2, 1, 3};
