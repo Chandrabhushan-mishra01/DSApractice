@@ -1,31 +1,40 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
-int main(){
-    string patch, designerWords;
-    cin >> patch >> designerWords;
-    int n = designerWords.size(), m = patch.size();
-    string built(n,'?');
-    vector<int> positions;
-    if(patch == "zy" && designerWords == "zyyy") {
-        cout << "2 1 0";
-        return 0;
+
+int computeLIS(const vector<int>& arr) {
+    vector<int> dp;
+    for (int num : arr) {
+        auto it = lower_bound(dp.begin(), dp.end(), num);
+        if (it == dp.end()) {
+            dp.push_back(num);
+        } else {
+            *it = num;
+        }
     }
-    for(int i=0;i<n;i++){
-        if(built[i] != designerWords[i]){
-            positions.push_back(i);
-            for(int j=0;j<m;j++){
-                if(i+j<n) built[i+j] = patch[j];
+    return dp.size();
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+
+    int maxLIS = computeLIS(arr);
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n; ++j) {
+            reverse(arr.begin() + i, arr.begin() + j + 1);
+            int currentLIS = computeLIS(arr);
+            if (currentLIS > maxLIS) {
+                maxLIS = currentLIS;
             }
+            reverse(arr.begin() + i, arr.begin() + j + 1);
         }
     }
-    if(built == designerWords){
-        for(int i=0;i<(int)positions.size();i++){
-            cout<<positions[i];
-            if(i<(int)positions.size()-1) cout<<" ";
-        }
-    } else {
-        cout<<"-1";
-    }
+
+    cout << maxLIS << endl;
     return 0;
 }

@@ -256,16 +256,21 @@ using namespace std;
 
 // //Backtracking 
 // //basic
-void func(int n, int count) {
-    if (count == n) return;         // Base case
-    cout << "mohit" << endl; 
-    func(n, count + 1);             // Increment `count` properly
+void func(int i, int n) {
+    if (i<1) return;         
+    func(i-1,n);            
+    cout << i << endl; 
 }
 
+void fact(int i,int ans){
+    if(i<1){
+        cout<<ans<<endl;
+        return;
+    } 
+    fact(i-1,ans*i);
+}
 int main() {
-    int n, count = 0;
-    cin >> n;
-    func(n, count);
+    fact(3,1);
 
     return 0;
 }
