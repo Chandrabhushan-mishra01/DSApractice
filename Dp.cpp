@@ -10,6 +10,16 @@ int f(int n, vector<int>& dp) {
 }
 
 //tabulation - TC-O(N) and SC-O(N) (Remove stack space)
+int tfs(int n, vector<int>& dp){
+    dp[0]=0;
+    dp[1]=1;
+    for(int i=2; i<=n; i++){
+        dp[i]=dp[i-1]+dp[i-2];
+    }
+    return dp[n];
+}
+
+//remove array space also 
 int tf(int n){
     int prev2=0;
     int prev =1;
@@ -24,6 +34,6 @@ int main() {
     int n;
     cin >> n;
     vector<int> dp(n + 1, -1);
-    cout << tf(n) << endl;
+    cout << tfs(n,dp) << endl;
     return 0;
 }
