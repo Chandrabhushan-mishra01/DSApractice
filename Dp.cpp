@@ -30,6 +30,14 @@ int tf(int n){
     }
     return prev;
 }
+
+//frog
+int frog(int n){
+    if(n==0) return 0;
+
+    
+}
+
 int main() {
     int n;
     cin >> n;
