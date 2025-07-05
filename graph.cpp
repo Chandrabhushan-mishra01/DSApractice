@@ -110,6 +110,23 @@ vector<int> BFSOfGraph(int v, vector<int> adj[]) {
     return bfs;
 }
 
+    void dfs(int node, vector<int>& vis, vector<int>& ans, vector<vector<int>>& adj) {
+        vis[node] = 1;
+        ans.push_back(node);  
+        for (auto it : adj[node]) {
+            if (!vis[it]) {
+                dfs(it, vis, ans, adj);
+            }
+        }
+    }
+
+    vector<int> dfs(vector<vector<int>>& adj) {
+        int V = adj.size();  
+        vector<int> vis(V, 0); 
+        vector<int> ans;
+        dfs(0, vis, ans, adj);  
+        return ans;
+    }
 
 int main() {
     int n; // n = number of vertices
